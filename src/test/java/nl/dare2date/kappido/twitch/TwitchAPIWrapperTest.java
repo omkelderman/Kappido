@@ -26,7 +26,6 @@ public class TwitchAPIWrapperTest {
     @Test
     public void checkUserFollowsOtherUser() throws Exception{
         List<ITwitchUser> users = new TwitchAPIWrapper().getFollowingUsers("MineMaarten");
-        for(ITwitchUser user : users) System.out.println(user.getLastPlayedGame());
         assertTrue(users.contains(new TwitchUser("ohaiichun")));
     }
 }
