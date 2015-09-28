@@ -60,6 +60,12 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+	
         <!--Start Spring-WS dependencies-->
         <!--Spring-WS-->
         <dependency>
