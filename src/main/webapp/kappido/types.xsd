@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.han.nl/schemas/types"
+        xmlns:tns="http://www.han.nl/schemas/types"
+        elementFormDefault="qualified">
+
+    <complexType name="MatchResult">
+        <sequence>
+            <element name="matchedUsers" type="tns:MatchEntry" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="MatchEntry">
+        <all>
+            <element name="userId" type="int" minOccurs="1" maxOccurs="1"/>
+            <element name="probability" type="double" minOccurs="1" maxOccurs="1"/>
+        </all>
+    </complexType>
+
+    <complexType name="MatchInput">
+        <sequence>
+            <element name="paramList" type="tns:MatchParameter" minOccurs="1" maxOccurs="6"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="MatchParameter">
+        <all>
+            <element name="weighing" type="int" minOccurs="1" maxOccurs="1"/>
+            <element name="matchType" type="tns:MatchType" minOccurs="1" maxOccurs="1"/>
+        </all>
+    </complexType>
+
+    <simpleType name="MatchType">
+        <restriction base="NCName">
+            <enumeration value="gamesWatched"/>
+            <enumeration value="genresWatched"/>
+            <enumeration value="gamesStreamed"/>
+            <enumeration value="mutualFollowings"/>
+            <enumeration value="gamesPlayed"/>
+            <enumeration value="genresPlayed"/>
+        </restriction>
+    </simpleType>
+</schema>
