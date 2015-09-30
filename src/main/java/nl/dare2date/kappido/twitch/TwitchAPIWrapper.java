@@ -18,18 +18,24 @@ import java.util.List;
  */
 public class TwitchAPIWrapper implements ITwitchAPIWrapper {
 
-    private static final String FOLLOWING_USERS_URL = "https://api.twitch.tv/kraken/users/%s/follows/channels";
+    private static final String FOLLOWING_USERS_URL = "https://api.twitch.tv/kraken/users/%s/follows/channels?direction=DESC&limit=100&offset=%s&sortby=created_at";
     private static final String GET_CHANNEL_URL = "https://api.twitch.tv/kraken/channels/%s";
 
     @Override
     public List<ITwitchUser> getFollowingUsers(String twitchId) {
         try {
-            JsonObject root = getJsonForPath(String.format(FOLLOWING_USERS_URL, twitchId));
-            JsonArray followingUserArray = root.get("follows").getAsJsonArray();
             List<ITwitchUser> followingUsers = new ArrayList<>();
-            for(JsonElement userElement : followingUserArray){
-                JsonObject channel = userElement.getAsJsonObject().get("channel").getAsJsonObject();
-                followingUsers.add(getUserForChannelObject(channel));
+            for(int i = 0; ; i+= 100){
+                JsonObject root = getJsonForPath(String.format(FOLLOWING_USERS_URL, twitchId, i));
+                JsonArray followingUserArray = root.get("follows").getAsJsonArray();
+                if(followingUserArray.size() > 0) {
+                    for (JsonElement userElement : followingUserArray) {
+                        JsonObject channel = userElement.getAsJsonObject().get("channel").getAsJsonObject();
+                        followingUsers.add(getUserForChannelObject(channel));
+                    }
+                }else{
+                    break; //When current page we're looking on doesn't contain more entries end.
+                }
             }
             return followingUsers;
         } catch (IOException e) {
