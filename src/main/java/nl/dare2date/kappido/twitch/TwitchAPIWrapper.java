@@ -28,14 +28,11 @@ public class TwitchAPIWrapper implements ITwitchAPIWrapper {
             for(int i = 0; ; i+= 100){
                 JsonObject root = getJsonForPath(String.format(FOLLOWING_USERS_URL, twitchId, i));
                 JsonArray followingUserArray = root.get("follows").getAsJsonArray();
-                if(followingUserArray.size() > 0) {
-                    for (JsonElement userElement : followingUserArray) {
-                        JsonObject channel = userElement.getAsJsonObject().get("channel").getAsJsonObject();
-                        followingUsers.add(getUserForChannelObject(channel));
-                    }
-                }else{
-                    break; //When current page we're looking on doesn't contain more entries end.
+                for (JsonElement userElement : followingUserArray) {
+                    JsonObject channel = userElement.getAsJsonObject().get("channel").getAsJsonObject();
+                    followingUsers.add(getUserForChannelObject(channel));
                 }
+                if(followingUserArray.size() < 100) break; //When this page contains less entries than the amount we asked for, we're done requesting.
             }
             return followingUsers;
         } catch (IOException e) {
