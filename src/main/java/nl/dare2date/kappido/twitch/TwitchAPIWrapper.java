@@ -32,7 +32,7 @@ public class TwitchAPIWrapper implements ITwitchAPIWrapper {
                     JsonObject channel = userElement.getAsJsonObject().get("channel").getAsJsonObject();
                     followingUsers.add(getUserForChannelObject(channel));
                 }
-                if(followingUserArray.size() < 100) break; //When this page contains less entries than the amount we asked for, we're done requesting.
+                if(i + 100 >= root.get("_total").getAsInt()) break; //When we've read all users, we're done requesting.
             }
             return followingUsers;
         } catch (IOException e) {
