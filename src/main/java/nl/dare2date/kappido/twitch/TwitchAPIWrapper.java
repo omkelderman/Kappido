@@ -51,10 +51,9 @@ public class TwitchAPIWrapper implements ITwitchAPIWrapper {
 
     private JsonObject getJsonForPath(String path) throws IOException{
         URL url = new URL(path);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        JsonObject root =  new JsonParser().parse(reader).getAsJsonObject();
-        reader.close(); //TODO close stream properly when exception thrown
-        return root;
+        try(BufferedReader reader= new BufferedReader(new InputStreamReader(url.openStream()))) {
+            return new JsonParser().parse(reader).getAsJsonObject();
+        }
     }
 
     private ITwitchUser getUserForChannelObject(JsonObject channel){
