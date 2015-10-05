@@ -6,12 +6,13 @@ import java.util.List;
  * Created by Maarten on 28-Sep-15.
  */
 public class SteamUser implements ISteamUser {
-
+    private final SteamAPIWrapper steamAPIWrapper;
     private final String steamId;
     private List<ISteamGame> ownedGames;
 
-    public SteamUser(String steamId){
-        this.steamId = steamId.toLowerCase();
+    public SteamUser(String steamId, SteamAPIWrapper steamAPIWrapper) {
+        this.steamId = steamId;
+        this.steamAPIWrapper = steamAPIWrapper;
     }
 
     @Override
@@ -22,7 +23,7 @@ public class SteamUser implements ISteamUser {
     @Override
     public List<ISteamGame> getOwnedGames() {
         if(ownedGames == null){
-            ownedGames = new SteamAPIWrapper().getOwnedGames(steamId);
+            ownedGames = steamAPIWrapper.getOwnedGames(steamId);
         }
         return ownedGames;
     }

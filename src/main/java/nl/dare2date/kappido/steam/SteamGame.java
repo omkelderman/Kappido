@@ -6,11 +6,13 @@ import java.util.List;
  * Created by Maarten on 28-9-2015.
  */
 public class SteamGame implements ISteamGame{
+    private final SteamAPIWrapper steamAPIWrapper;
     private final String appId;
     private String name;
     private List<String> genres;
 
-    public SteamGame(String appId){
+    public SteamGame(String appId, SteamAPIWrapper steamAPIWrapper){
+        this.steamAPIWrapper = steamAPIWrapper;
         this.appId = appId;
     }
 
@@ -26,7 +28,7 @@ public class SteamGame implements ISteamGame{
 
     @Override
     public String getName() {
-        if(name == null) new SteamAPIWrapper().addGameDetails(this);
+        if(name == null) steamAPIWrapper.addGameDetails(this);
         return name;
     }
 
@@ -37,7 +39,7 @@ public class SteamGame implements ISteamGame{
 
     @Override
     public List<String> getGenres() {
-        if(genres == null) new SteamAPIWrapper().addGameDetails(this);
+        if(genres == null) steamAPIWrapper.addGameDetails(this);
         return genres;
     }
 

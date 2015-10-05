@@ -20,6 +20,16 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
     private static final String STEAM_API_PATH = "SteamAPIKey.txt"; //Within the resources folder.
     private static final String STEAM_API_KEY;
 
+    private IURLResourceProvider urlResourceProvider;
+
+    public SteamAPIWrapper() {
+        this(new URLResourceProvider());
+    }
+
+    public SteamAPIWrapper(IURLResourceProvider urlResourceProvider) {
+        this.urlResourceProvider = urlResourceProvider;
+    }
+
     static{
         InputStream inputStream = ClassLoader.getSystemResourceAsStream(STEAM_API_PATH);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -37,7 +47,7 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
             List<ISteamGame> ownedGames = new ArrayList<>();
             for(JsonElement ownedGameElement : followingUserArray){
                 JsonObject ownedGameObject = ownedGameElement.getAsJsonObject();
-                ownedGames.add(new SteamGame(ownedGameObject.get("appid").getAsString()));//TODO utilize the 'playtime_forever' key.
+                ownedGames.add(new SteamGame(ownedGameObject.get("appid").getAsString(), this));//TODO utilize the 'playtime_forever' key.
             }
             return ownedGames;
         } catch (IOException e) {
@@ -47,7 +57,7 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
 
     @Override
     public ISteamUser getUser(String steamId){
-        return new SteamUser(steamId);
+        return new SteamUser(steamId, this);
     }
 
     @Override
@@ -68,7 +78,7 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
 
     private JsonObject getJsonForPath(String path) throws IOException{
         URL url = new URL(path);
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
+        try (BufferedReader reader = urlResourceProvider.getReaderForURL(url)) {
             return new JsonParser().parse(reader).getAsJsonObject();
         }
     }
