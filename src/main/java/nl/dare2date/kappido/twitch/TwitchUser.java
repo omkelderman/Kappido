@@ -13,7 +13,7 @@ public class TwitchUser implements ITwitchUser {
     }
 
     public TwitchUser(String twitchId, String lastPlayedGame){
-        this.twitchId = twitchId;
+        this(twitchId);
         this.lastPlayedGame = lastPlayedGame;
     }
 
