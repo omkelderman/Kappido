@@ -4,8 +4,6 @@ import com.google.gson.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,32 +15,23 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
 
     private static final String GET_OWNED_GAMES_PATH = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=%s&steamid=%s";//TODO look into 'include_appinfo' parameter
     private static final String GET_GAME_DETAILS = "http://store.steampowered.com/api/appdetails/?appids=%s";//TODO find better api hook location than store.steampowered?
-    private static final String STEAM_API_PATH = "SteamAPIKey.txt"; //Within the resources folder.
-    private static final String STEAM_API_KEY;
 
     private IURLResourceProvider urlResourceProvider;
+    private final String apiKey;
 
-    public SteamAPIWrapper() {
-        this(new URLResourceProvider());
+    public SteamAPIWrapper(String apiKey) {
+        this(apiKey, new URLResourceProvider());
     }
 
-    public SteamAPIWrapper(IURLResourceProvider urlResourceProvider) {
+    public SteamAPIWrapper(String apiKey, IURLResourceProvider urlResourceProvider) {
+        this.apiKey = apiKey;
         this.urlResourceProvider = urlResourceProvider;
-    }
-
-    static{
-        InputStream inputStream = ClassLoader.getSystemResourceAsStream(STEAM_API_PATH);
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
-            STEAM_API_KEY = br.readLine();
-        }catch (IOException e) {
-            throw new RuntimeException(e); // TODO handle properly
-        }
     }
 
     @Override
     public List<ISteamGame> getOwnedGames(String steamId) {
         try {
-            JsonObject root = getJsonForPath(String.format(GET_OWNED_GAMES_PATH, STEAM_API_KEY, steamId));
+            JsonObject root = getJsonForPath(String.format(GET_OWNED_GAMES_PATH, apiKey, steamId));
             JsonArray followingUserArray = root.get("response").getAsJsonObject().get("games").getAsJsonArray();
             List<ISteamGame> ownedGames = new ArrayList<>();
             for(JsonElement ownedGameElement : followingUserArray){
