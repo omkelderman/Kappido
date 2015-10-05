@@ -1,22 +1,22 @@
 package nl.dare2date.kappido.steam;
 
 import com.google.gson.*;
+import nl.dare2date.kappido.common.IURLResourceProvider;
+import nl.dare2date.kappido.common.JsonAPIWrapper;
+import nl.dare2date.kappido.common.URLResourceProvider;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Maarten on 28-Sep-15.
  */
-public class SteamAPIWrapper implements ISteamAPIWrapper {
+public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper {
 
     private static final String GET_OWNED_GAMES_PATH = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=%s&steamid=%s";//TODO look into 'include_appinfo' parameter
     private static final String GET_GAME_DETAILS = "http://store.steampowered.com/api/appdetails/?appids=%s";//TODO find better api hook location than store.steampowered?
 
-    private IURLResourceProvider urlResourceProvider;
     private final String apiKey;
 
     public SteamAPIWrapper(String apiKey) {
@@ -24,8 +24,8 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
     }
 
     public SteamAPIWrapper(String apiKey, IURLResourceProvider urlResourceProvider) {
+        super(urlResourceProvider);
         this.apiKey = apiKey;
-        this.urlResourceProvider = urlResourceProvider;
     }
 
     @Override
@@ -65,12 +65,6 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
         }
     }
 
-    private JsonObject getJsonForPath(String path) throws IOException{
-        URL url = new URL(path);
-        try (BufferedReader reader = urlResourceProvider.getReaderForURL(url)) {
-            return new JsonParser().parse(reader).getAsJsonObject();
-        }
-    }
 
     /**
      * Utility method

@@ -1,4 +1,4 @@
-package nl.dare2date.kappido.twitch;
+package nl.dare2date.kappido.common;
 
 import java.io.BufferedReader;
 import java.io.IOException;

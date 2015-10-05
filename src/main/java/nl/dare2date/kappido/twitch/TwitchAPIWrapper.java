@@ -3,30 +3,28 @@ package nl.dare2date.kappido.twitch;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import nl.dare2date.kappido.common.IURLResourceProvider;
+import nl.dare2date.kappido.common.JsonAPIWrapper;
+import nl.dare2date.kappido.common.URLResourceProvider;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Maarten on 28-Sep-15.
  */
-public class TwitchAPIWrapper implements ITwitchAPIWrapper {
+public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrapper {
 
     private static final String FOLLOWING_USERS_URL = "https://api.twitch.tv/kraken/users/%s/follows/channels?direction=DESC&limit=100&offset=%s&sortby=created_at";
     private static final String GET_CHANNEL_URL = "https://api.twitch.tv/kraken/channels/%s";
-
-    private IURLResourceProvider urlResourceProvider;
 
     public TwitchAPIWrapper() {
         this(new URLResourceProvider());
     }
 
     public TwitchAPIWrapper(IURLResourceProvider urlResourceProvider) {
-        this.urlResourceProvider = urlResourceProvider;
+        super(urlResourceProvider);
     }
 
     @Override
@@ -48,19 +46,12 @@ public class TwitchAPIWrapper implements ITwitchAPIWrapper {
         }
     }
 
-    public ITwitchUser getUser(String twitchId){
+    public ITwitchUser getUser(String twitchId) {
         try {
             JsonObject root = getJsonForPath(String.format(GET_CHANNEL_URL, twitchId));
             return getUserForChannelObject(root);
         } catch (IOException e) {
             throw new RuntimeException(e);//TODO handle properly
-        }
-    }
-
-    private JsonObject getJsonForPath(String path) throws IOException {
-        URL url = new URL(path);
-        try (BufferedReader reader = urlResourceProvider.getReaderForURL(url)) {
-            return new JsonParser().parse(reader).getAsJsonObject();
         }
     }
 
