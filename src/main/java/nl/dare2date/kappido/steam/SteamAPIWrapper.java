@@ -1,12 +1,12 @@
 package nl.dare2date.kappido.steam;
 
 import com.google.gson.*;
-import com.google.gson.stream.JsonWriter;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,16 +21,11 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
     private static final String STEAM_API_KEY;
 
     static{
-        try {
-            InputStream inputStream = SteamAPIWrapper.class.getClassLoader().getResourceAsStream(STEAM_API_PATH);
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        InputStream inputStream = ClassLoader.getSystemResourceAsStream(STEAM_API_PATH);
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             STEAM_API_KEY = br.readLine();
-            inputStream.close();
-            br.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         }catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // TODO handle properly
         }
     }
 
@@ -73,10 +68,9 @@ public class SteamAPIWrapper implements ISteamAPIWrapper {
 
     private JsonObject getJsonForPath(String path) throws IOException{
         URL url = new URL(path);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        JsonObject root =  new JsonParser().parse(reader).getAsJsonObject();
-        reader.close(); //TODO close stream properly when exception thrown
-        return root;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
+            return new JsonParser().parse(reader).getAsJsonObject();
+        }
     }
 
     /**
