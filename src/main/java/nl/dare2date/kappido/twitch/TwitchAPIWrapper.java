@@ -7,8 +7,6 @@ import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,16 @@ public class TwitchAPIWrapper implements ITwitchAPIWrapper {
 
     private static final String FOLLOWING_USERS_URL = "https://api.twitch.tv/kraken/users/%s/follows/channels?direction=DESC&limit=100&offset=%s&sortby=created_at";
     private static final String GET_CHANNEL_URL = "https://api.twitch.tv/kraken/channels/%s";
+
+    private IURLResourceProvider urlResourceProvider;
+
+    public TwitchAPIWrapper() {
+        this(new URLResourceProvider());
+    }
+
+    public TwitchAPIWrapper(IURLResourceProvider urlResourceProvider) {
+        this.urlResourceProvider = urlResourceProvider;
+    }
 
     @Override
     public List<ITwitchUser> getFollowingUsers(String twitchId) {
@@ -49,9 +57,9 @@ public class TwitchAPIWrapper implements ITwitchAPIWrapper {
         }
     }
 
-    private JsonObject getJsonForPath(String path) throws IOException{
+    private JsonObject getJsonForPath(String path) throws IOException {
         URL url = new URL(path);
-        try(BufferedReader reader= new BufferedReader(new InputStreamReader(url.openStream()))) {
+        try (BufferedReader reader = urlResourceProvider.getReaderForURL(url)) {
             return new JsonParser().parse(reader).getAsJsonObject();
         }
     }
