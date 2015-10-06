@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Olle on 05-10-2015.
  */
-public abstract class FakeURLResourceProvider implements IURLResourceProvider {
+public class FakeURLResourceProvider implements IURLResourceProvider {
     private final String resourceFolder;
     private final Map<String, String> fakeUrlHandlers;
 
@@ -17,7 +17,7 @@ public abstract class FakeURLResourceProvider implements IURLResourceProvider {
         this.fakeUrlHandlers = new HashMap<>();
     }
 
-    protected void registerFakeUrlHandler(String url, String filename) {
+    public void registerFakeUrlHandler(String url, String filename) {
         String path = resourceFolder + File.separatorChar + filename;
         fakeUrlHandlers.put(url, path);
     }
