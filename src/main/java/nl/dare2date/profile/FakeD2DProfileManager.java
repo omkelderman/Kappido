@@ -11,7 +11,7 @@ public class FakeD2DProfileManager implements ID2DProfileManager {
     public String getTwitchId(int dare2DateUserId) {
         switch(dare2DateUserId){
             case 0:
-                return "MineMaarten";
+                return "staiain";
             case 1:
                 return "omkelderman";
         }

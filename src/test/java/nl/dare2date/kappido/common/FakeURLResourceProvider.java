@@ -29,6 +29,7 @@ public class FakeURLResourceProvider implements IURLResourceProvider {
             throw new RuntimeException("No fake handler available for url: " + url);
         } else {
             InputStream inputStream = ClassLoader.getSystemResourceAsStream(resourcePath);
+            if(inputStream == null) throw new IllegalStateException("No file found at " + resourcePath);
             return new BufferedReader(new InputStreamReader(inputStream));
         }
     }
