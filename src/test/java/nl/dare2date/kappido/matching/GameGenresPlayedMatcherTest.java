@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class GameGenresPlayedMatcherTest {
 
-    private GamesPlayedMatcher matcher;
+    private GameGenresPlayedMatcher matcher;
     private static FakeURLResourceProvider fakeUrlResourceProvider;
 
     @BeforeClass
@@ -34,19 +34,19 @@ public class GameGenresPlayedMatcherTest {
         SteamAPIWrapper apiWrapper = new SteamAPIWrapper("steamapikey", fakeUrlResourceProvider);
         IUserCache<SteamUser> userCache = new FakeSteamCache(apiWrapper);
         apiWrapper.setCache(userCache);
-        matcher = new GamesPlayedMatcher(new FakeD2DProfileManager(), userCache);
+        matcher = new GameGenresPlayedMatcher(new FakeD2DProfileManager(), userCache);
     }
 
     @Test
     public void checkHasMatch() {
-        /*List<MatchEntry> matches = matcher.findMatches(1); TODO fix unit test, awaiting json files.
+        List<MatchEntry> matches = matcher.findMatches(1);
         double omkeldermanProbability = 0;
         for (MatchEntry match : matches) {
             if (match.getUserId() == 1) {
                 omkeldermanProbability += match.getProbability();
             }
         }
-        assertEquals(0, omkeldermanProbability, 0.001);*/
+        assertEquals(0, omkeldermanProbability, 0.001);
     }
 
 }

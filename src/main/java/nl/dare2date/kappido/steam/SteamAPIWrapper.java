@@ -79,13 +79,23 @@ public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper 
     public void addGameDetails(ISteamGame game){
         try {
             JsonObject root = getJsonForPath(String.format(GET_GAME_DETAILS, game.getId()));
-            JsonObject gameDetails = root.get(game.getId()).getAsJsonObject().get("data").getAsJsonObject();
-            game.setName(gameDetails.get("name").getAsString());
-            List<String> genres = new ArrayList<>();
-            for(JsonElement genreElement : gameDetails.get("genres").getAsJsonArray()){
-                genres.add(genreElement.getAsJsonObject().get("description").getAsString());//TODO maybe use 'id' instead of 'description'?
+            JsonObject subRoot = root.get(game.getId()).getAsJsonObject();
+            if(subRoot.has("data")) {
+                JsonObject gameDetails = subRoot.get("data").getAsJsonObject();
+                game.setName(gameDetails.get("name").getAsString());
+                List<String> genres = new ArrayList<>();
+                if(gameDetails.has("genres")) {
+                    for (JsonElement genreElement : gameDetails.get("genres").getAsJsonArray()) {
+                        genres.add(genreElement.getAsJsonObject().get("description").getAsString());//TODO maybe use 'id' instead of 'description'?
+                    }
+                    game.setGenres(genres);
+                }else{
+                    game.setGenres(new ArrayList<String>());
+                }
+            }else{
+                game.setName("<UNKNOWN>");
+                game.setGenres(new ArrayList<String>());
             }
-            game.setGenres(genres);
         } catch (IOException e) {
             throw new RuntimeException(e);//TODO handle properly
         }

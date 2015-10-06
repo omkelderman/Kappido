@@ -26,7 +26,7 @@ public abstract class FakeURLResourceProvider implements IURLResourceProvider {
     public BufferedReader getReaderForURL(URL url) throws IOException {
         String resourcePath = fakeUrlHandlers.get(url.toString());
         if (resourcePath == null) {
-            throw new RuntimeException("No fake handler available for url: " + url);
+            throw new IllegalArgumentException("No fake handler available for url: " + url);
         } else {
             InputStream inputStream = ClassLoader.getSystemResourceAsStream(resourcePath);
             if (inputStream == null) throw new IllegalStateException("No file found at " + resourcePath);
