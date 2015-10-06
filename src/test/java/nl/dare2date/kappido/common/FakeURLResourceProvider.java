@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Olle on 05-10-2015.
  */
-public class FakeURLResourceProvider implements IURLResourceProvider {
+public abstract class FakeURLResourceProvider implements IURLResourceProvider {
     private final String resourceFolder;
     private final Map<String, String> fakeUrlHandlers;
 
@@ -29,7 +29,7 @@ public class FakeURLResourceProvider implements IURLResourceProvider {
             throw new RuntimeException("No fake handler available for url: " + url);
         } else {
             InputStream inputStream = ClassLoader.getSystemResourceAsStream(resourcePath);
-            if(inputStream == null) throw new IllegalStateException("No file found at " + resourcePath);
+            if (inputStream == null) throw new IllegalStateException("No file found at " + resourcePath);
             return new BufferedReader(new InputStreamReader(inputStream));
         }
     }

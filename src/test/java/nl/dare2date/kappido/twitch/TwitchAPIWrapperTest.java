@@ -20,11 +20,7 @@ public class TwitchAPIWrapperTest {
 
     @BeforeClass
     public static void initAll() {
-        fakeUrlResourceProvider = new FakeURLResourceProvider("twitch");
-        fakeUrlResourceProvider.registerFakeUrlHandler("https://api.twitch.tv/kraken/users/staiain/follows/channels?direction=DESC&limit=100&offset=0&sortby=created_at", "staiain_following_0-99.json");
-        fakeUrlResourceProvider.registerFakeUrlHandler("https://api.twitch.tv/kraken/users/staiain/follows/channels?direction=DESC&limit=100&offset=100&sortby=created_at", "staiain_following_100-199.json");
-        fakeUrlResourceProvider.registerFakeUrlHandler("https://api.twitch.tv/kraken/users/staiain/follows/channels?direction=DESC&limit=100&offset=200&sortby=created_at", "staiain_following_200-229.json");
-        fakeUrlResourceProvider.registerFakeUrlHandler("https://api.twitch.tv/kraken/channels/staiain", "staiain_channel.json");
+        fakeUrlResourceProvider = new FakeTwitchURLResourceProvider();
     }
 
     @Before
