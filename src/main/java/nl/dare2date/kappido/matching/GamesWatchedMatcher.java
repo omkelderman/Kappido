@@ -13,24 +13,15 @@ import java.util.*;
 /**
  * Created by Maarten on 6-10-2015.
  */
-public class GamesWatchedMatcher implements IMatcher {
-    private ID2DProfileManager profileManager;
-    private IUserCache<TwitchUser> twitchUserCache;
+public class GamesWatchedMatcher extends TwitchMatcher {
 
     public GamesWatchedMatcher(ID2DProfileManager profileManager, IUserCache<TwitchUser> twitchUserCache){
-        this.profileManager = profileManager;
-        this.twitchUserCache = twitchUserCache;
+        super(profileManager, twitchUserCache);
     }
 
     @Override
-    public List<MatchEntry> findMatches(int dare2DateUser) {
+    public List<MatchEntry> findMatches(int dare2DateUser, ITwitchUser twitchUser) {
         List<MatchEntry> matches = new ArrayList<>();
-
-        String twitchId = profileManager.getTwitchId(dare2DateUser);
-        if(twitchId == null) throw new IllegalStateException("No Twitch Id for user " + dare2DateUser); //TODO handle differently?
-
-        ITwitchUser twitchUser = twitchUserCache.getUserById(twitchId);
-        if(twitchUser == null) throw new IllegalStateException("No Twitch user for Twitch Id " + twitchId); //TODO handle differently?
 
         List<ITwitchUser> followingUsers = twitchUser.getFollowingUsers();
 

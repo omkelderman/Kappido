@@ -23,6 +23,7 @@ public class MatchMaker {
     public MatchMaker(ID2DProfileManager profileManager, IUserCache<TwitchUser> twitchUserCache, IUserCache<SteamUser> steamUserCache){
         this(new HashMap<MatchType, IMatcher>());
         matchers.put(MatchType.GAMES_WATCHED, new GamesWatchedMatcher(profileManager, twitchUserCache));
+        matchers.put(MatchType.MUTUAL_FOLLOWINGS, new MutualFollowingsMatcher(profileManager, twitchUserCache));
     }
 
     public MatchMaker(Map<MatchType, IMatcher> matchers){
