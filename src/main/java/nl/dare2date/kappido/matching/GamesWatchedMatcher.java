@@ -20,7 +20,7 @@ public class GamesWatchedMatcher extends TwitchMatcher {
     }
 
     @Override
-    public List<MatchEntry> findMatches(int dare2DateUser, ITwitchUser twitchUser) {
+    public List<MatchEntry> findMatches(int dare2DateUser, ITwitchUser twitchUser, Map<Integer, ITwitchUser> twitchDare2DateUsers){
         List<MatchEntry> matches = new ArrayList<>();
 
         List<ITwitchUser> followingUsers = twitchUser.getFollowingUsers();
@@ -31,21 +31,15 @@ public class GamesWatchedMatcher extends TwitchMatcher {
             if(!StringUtils.isEmpty(watchedGame)) watchedGames.add(watchedGame);
         }
 
-        for(int otherDare2DateUser : profileManager.getAllUsers()){
-            if(otherDare2DateUser != dare2DateUser) {
-                String otherTwitchId = profileManager.getTwitchId(otherDare2DateUser);
-                if (otherTwitchId != null) {
-                    ITwitchUser otherTwitchUser = twitchUserCache.getUserById(otherTwitchId);
-                    if (otherTwitchUser != null) {
-                        List<ITwitchUser> otherFollowingUsers = otherTwitchUser.getFollowingUsers();
-                        for (ITwitchUser otherFollowingUser : otherFollowingUsers) {
-                            if (watchedGames.contains(otherFollowingUser.getLastPlayedGame())) {
-                                MatchEntry entry = new MatchEntry();
-                                entry.setUserId(otherDare2DateUser);
-                                entry.setProbability(1); //It could be that multiple games watched are shared, in that case the probabilities will be combined in MatchMaker.
-                                matches.add(entry);
-                            }
-                        }
+        for(Map.Entry<Integer, ITwitchUser> otherTwitchUser : twitchDare2DateUsers.entrySet()){
+            if(otherTwitchUser.getKey() != dare2DateUser) { //We can't match with ourselves..
+                List<ITwitchUser> otherFollowingUsers = otherTwitchUser.getValue().getFollowingUsers();
+                for (ITwitchUser otherFollowingUser : otherFollowingUsers) {
+                    if (watchedGames.contains(otherFollowingUser.getLastPlayedGame())) {
+                        MatchEntry entry = new MatchEntry();
+                        entry.setUserId(otherTwitchUser.getKey());
+                        entry.setProbability(1); //It could be that multiple games watched are shared, in that case the probabilities will be combined in MatchMaker.
+                        matches.add(entry);
                     }
                 }
             }
