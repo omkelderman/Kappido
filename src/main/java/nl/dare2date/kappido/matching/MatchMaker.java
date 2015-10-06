@@ -24,6 +24,9 @@ public class MatchMaker {
         this(new HashMap<MatchType, IMatcher>());
         matchers.put(MatchType.GAMES_WATCHED, new GamesWatchedMatcher(profileManager, twitchUserCache));
         matchers.put(MatchType.MUTUAL_FOLLOWINGS, new MutualFollowingsMatcher(profileManager, twitchUserCache));
+        matchers.put(MatchType.GAMES_STREAMED, new GamesStreamedMatcher(profileManager, twitchUserCache));
+        matchers.put(MatchType.GENRES_PLAYED, new GameGenresPlayedMatcher(profileManager, steamUserCache));
+        matchers.put(MatchType.GAMES_PLAYED, new GamesPlayedMatcher(profileManager, steamUserCache));
     }
 
     public MatchMaker(Map<MatchType, IMatcher> matchers){
