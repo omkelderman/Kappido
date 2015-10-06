@@ -1,34 +1,46 @@
 package nl.dare2date.profile;
 
-import java.util.Arrays;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * Created by Maarten on 05-Oct-15.
  */
 public class FakeD2DProfileManager implements ID2DProfileManager {
+    private static Map<Integer, FakeD2DUser> users;
+
+    public FakeD2DProfileManager() {
+        Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream("fakeUsers.json"));
+        Gson gson = new Gson();
+
+        users = new HashMap<>();
+        Type fakeD2DUserListType = new TypeToken<List<FakeD2DUser>>() {
+        }.getType();
+        ArrayList<FakeD2DUser> userList = gson.fromJson(reader, fakeD2DUserListType);
+        for (FakeD2DUser user : userList) {
+            users.put(user.getUserId(), user);
+        }
+    }
+
     @Override
     public String getTwitchId(int dare2DateUserId) {
-        switch(dare2DateUserId){
-            case 0:
-                return "staiain";
-            case 1:
-                return "omkelderman";
-        }
-        return null;
+        FakeD2DUser user = users.get(dare2DateUserId);
+        return user == null ? null : user.getTwitchId();
     }
 
     @Override
     public String getSteamId(int dare2DateUserId) {
-        switch(dare2DateUserId){
-            case 0:
-                return "76561198034641265";
-        }
-        return null;
+        FakeD2DUser user = users.get(dare2DateUserId);
+        return user == null ? null : user.getSteamId();
     }
 
     @Override
-    public List<Integer> getAllUsers() {
-        return Arrays.asList(0, 1);
+    public Set<Integer> getAllUsers() {
+        return users.keySet();
     }
 }
