@@ -1,10 +1,14 @@
-package nl.dare2date.kappido.steam;
+package nl.dare2date.kappido.matching;
 
 import nl.dare2date.kappido.common.FakeURLResourceProvider;
 import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.matching.GamesPlayedMatcher;
 import nl.dare2date.kappido.matching.GamesStreamedMatcher;
 import nl.dare2date.kappido.services.MatchEntry;
+import nl.dare2date.kappido.steam.FakeSteamCache;
+import nl.dare2date.kappido.steam.FakeSteamURLResourceProvider;
+import nl.dare2date.kappido.steam.SteamAPIWrapper;
+import nl.dare2date.kappido.steam.SteamUser;
 import nl.dare2date.kappido.twitch.FakeTwitchCache;
 import nl.dare2date.kappido.twitch.FakeTwitchURLResourceProvider;
 import nl.dare2date.kappido.twitch.TwitchAPIWrapper;
