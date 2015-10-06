@@ -69,7 +69,7 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
     private ITwitchUser getUserForChannelObject(JsonObject channel){
         String twitchId = channel.get("name").getAsString();
         JsonElement gameElement = channel.get("game");
-        String lastPlayedGame = gameElement.isJsonNull() ? null : gameElement.getAsString();
+        String lastPlayedGame = gameElement.isJsonNull() ? "" : gameElement.getAsString();
         TwitchUser user = new TwitchUser(twitchId, this, lastPlayedGame);
         if(userCache != null) userCache.addToCache(user, twitchId);
         return user;

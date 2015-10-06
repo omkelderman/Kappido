@@ -41,17 +41,19 @@ public class GamesWatchedMatcher implements IMatcher {
         }
 
         for(int otherDare2DateUser : profileManager.getAllUsers()){
-            String otherTwitchId = profileManager.getTwitchId(otherDare2DateUser);
-            if(otherTwitchId != null){
-                ITwitchUser otherTwitchUser = twitchUserCache.getUserById(otherTwitchId);
-                if(otherTwitchUser != null) {
-                    List<ITwitchUser> otherFollowingUsers = otherTwitchUser.getFollowingUsers();
-                    for(ITwitchUser otherFollowingUser : otherFollowingUsers){
-                        if(watchedGames.contains(otherFollowingUser.getLastPlayedGame())){
-                            MatchEntry entry = new MatchEntry();
-                            entry.setUserId(otherDare2DateUser);
-                            entry.setProbability(1); //It could be that multiple games watched are shared, in that case the probabilities will be combined in MatchMaker.
-                            matches.add(entry);
+            if(otherDare2DateUser != dare2DateUser) {
+                String otherTwitchId = profileManager.getTwitchId(otherDare2DateUser);
+                if (otherTwitchId != null) {
+                    ITwitchUser otherTwitchUser = twitchUserCache.getUserById(otherTwitchId);
+                    if (otherTwitchUser != null) {
+                        List<ITwitchUser> otherFollowingUsers = otherTwitchUser.getFollowingUsers();
+                        for (ITwitchUser otherFollowingUser : otherFollowingUsers) {
+                            if (watchedGames.contains(otherFollowingUser.getLastPlayedGame())) {
+                                MatchEntry entry = new MatchEntry();
+                                entry.setUserId(otherDare2DateUser);
+                                entry.setProbability(1); //It could be that multiple games watched are shared, in that case the probabilities will be combined in MatchMaker.
+                                matches.add(entry);
+                            }
                         }
                     }
                 }

@@ -32,10 +32,10 @@ public class GameWatchedMatcherTest {
 
     @Test
     public void checkHasMatch(){
-       /* List<MatchEntry> matches = matcher.findMatches(0);
+        List<MatchEntry> matches = matcher.findMatches(0);
         for(MatchEntry match : matches){
             System.out.println("id: " + match.getUserId() + ", probability: " + match.getProbability());
-        }*/
+        }
     }
 
 }
