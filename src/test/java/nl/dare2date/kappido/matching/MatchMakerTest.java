@@ -22,7 +22,7 @@ public class MatchMakerTest {
 
     @Before
     public void init(){
-        Map<MatchType, IMatchType> matchers = new HashMap<>();
+        Map<MatchType, IMatcher> matchers = new HashMap<>();
         matchers.put(MatchType.MUTUAL_FOLLOWINGS, new TestMatcher());
         matchers.put(MatchType.GAMES_PLAYED, new TestMatcher());
         this.matchMaker = new MatchMaker(matchers);

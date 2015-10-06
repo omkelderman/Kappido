@@ -10,7 +10,7 @@ public class SteamUser implements ISteamUser {
     private final String steamId;
     private List<ISteamGame> ownedGames;
 
-    public SteamUser(String steamId, SteamAPIWrapper steamAPIWrapper) {
+    SteamUser(String steamId, SteamAPIWrapper steamAPIWrapper) {
         this.steamId = steamId;
         this.steamAPIWrapper = steamAPIWrapper;
     }

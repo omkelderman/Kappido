@@ -35,17 +35,17 @@ public class TwitchAPIWrapperTest {
     @Test
     public void checkUserRetrieval() throws Exception {
         ITwitchUser user = twitchAPIWrapper.getUser("staiain");
-        assertEquals(user, new TwitchUser("staiain"));
+        assertEquals(user.getTwitchId(), "staiain");
     }
 
     @Test
     public void checkUserFollowsOtherUser() throws Exception {
         List<ITwitchUser> users = twitchAPIWrapper.getFollowingUsers("staiain");
-        assertTrue(users.contains(new TwitchUser("kommisar"))); // 0-99|0
-        assertTrue(users.contains(new TwitchUser("Woddles"))); // 0-99|42
-        assertTrue(users.contains(new TwitchUser("denkyu"))); // 100-199|0
-        assertTrue(users.contains(new TwitchUser("konnochan"))); // 100-199|42
-        assertTrue(users.contains(new TwitchUser("PortalLifu"))); // 200-299|0
-        assertTrue(users.contains(new TwitchUser("linkmaster500"))); // 200-229|28
+        assertTrue(users.contains(new TwitchUser("kommisar", twitchAPIWrapper))); // 0-99|0
+        assertTrue(users.contains(new TwitchUser("Woddles", twitchAPIWrapper))); // 0-99|42
+        assertTrue(users.contains(new TwitchUser("denkyu", twitchAPIWrapper))); // 100-199|0
+        assertTrue(users.contains(new TwitchUser("konnochan", twitchAPIWrapper))); // 100-199|42
+        assertTrue(users.contains(new TwitchUser("PortalLifu", twitchAPIWrapper))); // 200-299|0
+        assertTrue(users.contains(new TwitchUser("linkmaster500", twitchAPIWrapper))); // 200-229|28
     }
 }

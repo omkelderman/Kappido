@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import nl.dare2date.kappido.common.IURLResourceProvider;
+import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.common.JsonAPIWrapper;
 import nl.dare2date.kappido.common.URLResourceProvider;
 
@@ -18,6 +19,7 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
 
     private static final String FOLLOWING_USERS_URL = "https://api.twitch.tv/kraken/users/%s/follows/channels?direction=DESC&limit=100&offset=%s&sortby=created_at";
     private static final String GET_CHANNEL_URL = "https://api.twitch.tv/kraken/channels/%s";
+    private IUserCache<TwitchUser> userCache;
 
     public TwitchAPIWrapper() {
         this(new URLResourceProvider());
@@ -25,6 +27,15 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
 
     public TwitchAPIWrapper(IURLResourceProvider urlResourceProvider) {
         super(urlResourceProvider);
+    }
+
+    /**
+     * Setting the cache via a setter as opposed to via the constructor, as due to a circular reference with TwitchAPIWrapper and TwitchUserCache they can't set each other via the constructor.
+     * @param userCache
+     * @return
+     */
+    public void setCache(IUserCache<TwitchUser> userCache){
+        this.userCache = userCache;
     }
 
     @Override
@@ -56,9 +67,11 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
     }
 
     private ITwitchUser getUserForChannelObject(JsonObject channel){
-        String followingTwitchId = channel.get("name").getAsString();
+        String twitchId = channel.get("name").getAsString();
         JsonElement gameElement = channel.get("game");
         String lastPlayedGame = gameElement.isJsonNull() ? null : gameElement.getAsString();
-        return new TwitchUser(followingTwitchId, lastPlayedGame);
+        TwitchUser user = new TwitchUser(twitchId, this, lastPlayedGame);
+        if(userCache != null) userCache.addToCache(user, twitchId);
+        return user;
     }
 }

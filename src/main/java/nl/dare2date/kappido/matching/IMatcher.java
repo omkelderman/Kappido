@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Maarten on 05-Oct-15.
  */
-public interface IMatchType {
+public interface IMatcher {
 
     /**
      *

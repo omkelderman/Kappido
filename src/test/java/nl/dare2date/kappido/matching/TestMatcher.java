@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Maarten on 05-Oct-15.
  */
-public class TestMatcher implements IMatchType {
+public class TestMatcher implements IMatcher {
     @Override
     public List<MatchEntry> findMatches(int dare2DateUser) {
         List<MatchEntry> matches = new ArrayList<>();
