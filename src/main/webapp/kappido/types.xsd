@@ -19,6 +19,7 @@
 
     <complexType name="MatchInput">
         <sequence>
+            <element name="userId" type="int" minOccurs="1" maxOccurs="1"/>
             <element name="paramList" type="tns:MatchParameter" minOccurs="1" maxOccurs="6"/>
         </sequence>
     </complexType>

@@ -15,9 +15,9 @@ import java.util.List;
 
 @Endpoint
 public class KappidoEndpoint {
-
     private final TwitchUserCache twitchUserCache;//TODO let Spring inject an instance
     private final SteamUserCache steamUserCache;//TODO let Spring inject an instance
+    private final MatchMaker matchMaker;//TODO let Spring inject an instance of MatchMaker
 
     public KappidoEndpoint() {
         TwitchAPIWrapper twitchAPIWrapper = new TwitchAPIWrapper();
@@ -27,14 +27,15 @@ public class KappidoEndpoint {
         SteamAPIWrapper steamAPIWrapper = new SteamAPIWrapper();
         steamUserCache = new SteamUserCache(steamAPIWrapper);
         steamAPIWrapper.setCache(steamUserCache);
+
+        matchMaker = new MatchMaker(new FakeD2DProfileManager(), twitchUserCache, steamUserCache);
     }
 
     @PayloadRoot(localPart = "MatchRequest", namespace = "http://www.han.nl/schemas/messages")
     @ResponsePayload
     public MatchResponse calculateMatch(@RequestPayload MatchRequest req) {
-        MatchMaker matchMaker = new MatchMaker(new FakeD2DProfileManager(), twitchUserCache, steamUserCache); //TODO let Spring inject an instance of MatchMaker
-
-        List<MatchEntry> matchResults = matchMaker.findMatch(0, req.getInput().getParamList());
+        MatchInput matchInput = req.getInput();
+        List<MatchEntry> matchResults = matchMaker.findMatch(matchInput.getUserId(), matchInput.getParamList());
         MatchResult matchResult = new MatchResult();
         matchResult.getMatchedUsers().addAll(matchResults);
         MatchResponse res = new MatchResponse();
