@@ -38,15 +38,46 @@ public class GameStreamedMatcherTest {
     }
 
     @Test
-    public void checkHasMatch() {
-        List<MatchEntry> matches = matcher.findMatches(0);
-        double omkeldermanProbability = 0;
+    public void checkHasMatchForOmkelderman() {
+        List<MatchEntry> matches = matcher.findMatches(UserIDs.TWITCH_OMKELDERMAN);
+
+        double minemaartenProbability = 0;
+        double xikeonProbability = 0;
+
         for (MatchEntry match : matches) {
-            if (match.getUserId() == 1) {
-                omkeldermanProbability += match.getProbability();
+            switch (match.getUserId()) {
+                case UserIDs.TWITCH_MINEMAARTEN:
+                    minemaartenProbability += match.getProbability();
+                    break;
+                case UserIDs.TWITCH_XIKEON:
+                    xikeonProbability += match.getProbability();
+                    break;
             }
         }
-        assertEquals(0, omkeldermanProbability, 0.001);
+
+        assertEquals(0, minemaartenProbability, 0.001); // omkelderman and minemaarten don't have the same "last streamed game"
+        assertEquals(1, xikeonProbability, 0.001); // omkelderman and xikeon have the same "last streamed game"
     }
 
+    @Test
+    public void checkHasMatchForMineMaarten() {
+        List<MatchEntry> matches = matcher.findMatches(UserIDs.TWITCH_MINEMAARTEN);
+
+        double quetziProbability = 0;
+        double omkeldermanProbability = 0;
+
+        for (MatchEntry match : matches) {
+            switch (match.getUserId()) {
+                case UserIDs.TWITCH_QUETZI:
+                    quetziProbability += match.getProbability();
+                    break;
+                case UserIDs.TWITCH_OMKELDERMAN:
+                    omkeldermanProbability += match.getProbability();
+                    break;
+            }
+        }
+
+        assertEquals(1, quetziProbability, 0.001); // minemaarten and quetzi have the same "last streamed game"
+        assertEquals(0, omkeldermanProbability, 0.001); // minemaarten and omkelderman don't have the same "last streamed game"
+    }
 }

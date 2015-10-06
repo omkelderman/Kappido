@@ -38,15 +38,41 @@ public class GameWatchedMatcherTest {
     }
 
     @Test
-    public void checkHasMatch() {
-        List<MatchEntry> matches = matcher.findMatches(0);
-        double omKeldermanProbability = 0;
+    public void checkHasMatchOmkelderman() {
+        List<MatchEntry> matches = matcher.findMatches(UserIDs.TWITCH_OMKELDERMAN);
+        double staiainProbability = 0;
+        double minemaartenProbability = 0;
         for (MatchEntry match : matches) {
-            if (match.getUserId() == 1) {
-                omKeldermanProbability += match.getProbability();
+            switch (match.getUserId()) {
+                case UserIDs.TWITCH_STAIAIN:
+                    staiainProbability += match.getProbability();
+                    break;
+                case UserIDs.TWITCH_MINEMAARTEN:
+                    minemaartenProbability += match.getProbability();
+                    break;
             }
         }
-        assertEquals(25, omKeldermanProbability, 0.001);
+        assertEquals(135, staiainProbability, 0.001);
+        assertEquals(7, minemaartenProbability, 0.001);
+    }
+
+    @Test
+    public void checkHasMatchMinemaarten() {
+        List<MatchEntry> matches = matcher.findMatches(UserIDs.TWITCH_MINEMAARTEN);
+        double quetziProbability = 0;
+        double happystickProbability = 0;
+        for (MatchEntry match : matches) {
+            switch (match.getUserId()) {
+                case UserIDs.TWITCH_QUETZI:
+                    quetziProbability += match.getProbability();
+                    break;
+                case UserIDs.TWITCH_HAPPYSTICK:
+                    happystickProbability += match.getProbability();
+                    break;
+            }
+        }
+        assertEquals(33, quetziProbability, 0.001);
+        assertEquals(4, happystickProbability, 0.001);
     }
 
 }

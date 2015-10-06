@@ -38,15 +38,40 @@ public class MutualFollowingsMatcherTest {
     }
 
     @Test
-    public void checkHasMatch() {
-        List<MatchEntry> matches = matcher.findMatches(0);
-        double omKeldermanProbability = 0;
+    public void checkHasMatchOmkelderman() {
+        List<MatchEntry> matches = matcher.findMatches(UserIDs.TWITCH_OMKELDERMAN);
+        double staiainProbability = 0;
+        double justinProbability = 0;
         for (MatchEntry match : matches) {
-            if (match.getUserId() == 1) {
-                omKeldermanProbability += match.getProbability();
+            switch (match.getUserId()) {
+                case UserIDs.TWITCH_STAIAIN:
+                    staiainProbability += match.getProbability();
+                    break;
+                case UserIDs.TWITCH_JUSTIN:
+                    justinProbability += match.getProbability();
+                    break;
             }
         }
-        assertEquals(11, omKeldermanProbability, 0.001); //Staiain has 11 shared followings with omkelderman.
+        assertEquals(11, staiainProbability, 0.001); //Staiain has 11 shared followings with omkelderman.
+        assertEquals(0, justinProbability, 0.001); //Justin has 0 shared followings with omkelderman.
     }
 
+    @Test
+    public void checkHasMatchMinemaarten() {
+        List<MatchEntry> matches = matcher.findMatches(UserIDs.TWITCH_MINEMAARTEN);
+        double omkeldermanProbability = 0;
+        double quetziProbability = 0;
+        for (MatchEntry match : matches) {
+            switch (match.getUserId()) {
+                case UserIDs.TWITCH_OMKELDERMAN:
+                    omkeldermanProbability += match.getProbability();
+                    break;
+                case UserIDs.TWITCH_QUETZI:
+                    quetziProbability += match.getProbability();
+                    break;
+            }
+        }
+        assertEquals(0, omkeldermanProbability, 0.001); //omkelderman has 0 shared followings with minemaarten.
+        assertEquals(5, quetziProbability, 0.001); //quetzi has 5 shared followings with minemaarten.
+    }
 }
