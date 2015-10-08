@@ -1,11 +1,12 @@
 package nl.dare2date.kappido.services;
 
 import nl.dare2date.kappido.matching.MatchMaker;
-import nl.dare2date.kappido.steam.SteamAPIWrapper;
+import nl.dare2date.kappido.steam.ISteamAPIWrapper;
 import nl.dare2date.kappido.steam.SteamUserCache;
-import nl.dare2date.kappido.twitch.TwitchAPIWrapper;
+import nl.dare2date.kappido.twitch.ITwitchAPIWrapper;
 import nl.dare2date.kappido.twitch.TwitchUserCache;
-import nl.dare2date.profile.FakeD2DProfileManager;
+import nl.dare2date.profile.ID2DProfileManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -15,20 +16,17 @@ import java.util.List;
 
 @Endpoint
 public class KappidoEndpoint {
-    private final TwitchUserCache twitchUserCache;//TODO let Spring inject an instance
-    private final SteamUserCache steamUserCache;//TODO let Spring inject an instance
-    private final MatchMaker matchMaker;//TODO let Spring inject an instance of MatchMaker
+    private final MatchMaker matchMaker;
 
-    public KappidoEndpoint() {
-        TwitchAPIWrapper twitchAPIWrapper = new TwitchAPIWrapper();
-        twitchUserCache = new TwitchUserCache(twitchAPIWrapper);
+    @Autowired
+    public KappidoEndpoint(ID2DProfileManager profileManager, ITwitchAPIWrapper twitchAPIWrapper, ISteamAPIWrapper steamAPIWrapper) {
+        TwitchUserCache twitchUserCache = new TwitchUserCache(twitchAPIWrapper);
         twitchAPIWrapper.setCache(twitchUserCache);
 
-        SteamAPIWrapper steamAPIWrapper = new SteamAPIWrapper();
-        steamUserCache = new SteamUserCache(steamAPIWrapper);
+        SteamUserCache steamUserCache = new SteamUserCache(steamAPIWrapper);
         steamAPIWrapper.setCache(steamUserCache);
 
-        matchMaker = new MatchMaker(new FakeD2DProfileManager(), twitchUserCache, steamUserCache);
+        matchMaker = new MatchMaker(profileManager, twitchUserCache, steamUserCache);
     }
 
     @PayloadRoot(localPart = "MatchRequest", namespace = "http://www.han.nl/schemas/messages")

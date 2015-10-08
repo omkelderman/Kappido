@@ -9,6 +9,11 @@
 
     <!--Scan for classes that can be autowired-->
     <context:component-scan base-package="nl.dare2date.kappido.services"/>
+
+    <bean id="profileManager" class="nl.dare2date.profile.FakeD2DProfileManager"/>
+    <bean id="twitchAPIWrapper" class="nl.dare2date.kappido.twitch.TwitchAPIWrapper"/>
+    <bean id="steamAPIWrapper" class="nl.dare2date.kappido.steam.SteamAPIWrapper"/>
+
     <!--Allow usage of annotation driven webservices with @Endpoint, @RequestPayload, @ResponsePayload etc.-->
     <sws:annotation-driven/>
 
