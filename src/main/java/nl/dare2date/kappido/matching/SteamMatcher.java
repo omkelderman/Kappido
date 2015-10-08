@@ -3,7 +3,6 @@ package nl.dare2date.kappido.matching;
 import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
 import nl.dare2date.kappido.steam.ISteamUser;
-import nl.dare2date.kappido.steam.SteamUser;
 import nl.dare2date.profile.ID2DProfileManager;
 
 import java.util.HashMap;
@@ -15,9 +14,9 @@ import java.util.Map;
  */
 public abstract class SteamMatcher implements IMatcher {
     protected ID2DProfileManager profileManager;
-    protected IUserCache<SteamUser> steamUserCache;
+    protected IUserCache<ISteamUser> steamUserCache;
 
-    public SteamMatcher(ID2DProfileManager profileManager, IUserCache<SteamUser> steamUserCache) {
+    public SteamMatcher(ID2DProfileManager profileManager, IUserCache<ISteamUser> steamUserCache) {
         this.profileManager = profileManager;
         this.steamUserCache = steamUserCache;
     }

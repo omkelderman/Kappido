@@ -7,18 +7,18 @@ import java.util.List;
  */
 public class TwitchUser implements ITwitchUser {
 
-    private final TwitchAPIWrapper apiWrapper;
+    private final ITwitchAPIWrapper apiWrapper;
     private final String twitchId;
     private String lastPlayedGame;
     private List<ITwitchUser> followingUsers;
 
 
-    TwitchUser(String twitchId, TwitchAPIWrapper apiWrapper) {
+    TwitchUser(String twitchId, ITwitchAPIWrapper apiWrapper) {
         this.twitchId = twitchId.toLowerCase();
         this.apiWrapper = apiWrapper;
     }
 
-    TwitchUser(String twitchId, TwitchAPIWrapper apiWrapper, String lastPlayedGame) {
+    TwitchUser(String twitchId, ITwitchAPIWrapper apiWrapper, String lastPlayedGame) {
         this(twitchId, apiWrapper);
         this.lastPlayedGame = lastPlayedGame;
     }

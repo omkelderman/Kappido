@@ -6,11 +6,11 @@ import java.util.List;
  * Created by Maarten on 28-Sep-15.
  */
 public class SteamUser implements ISteamUser {
-    private final SteamAPIWrapper steamAPIWrapper;
+    private final ISteamAPIWrapper steamAPIWrapper;
     private final String steamId;
     private List<ISteamGame> ownedGames;
 
-    SteamUser(String steamId, SteamAPIWrapper steamAPIWrapper) {
+    SteamUser(String steamId, ISteamAPIWrapper steamAPIWrapper) {
         this.steamId = steamId;
         this.steamAPIWrapper = steamAPIWrapper;
     }

@@ -6,12 +6,12 @@ import java.util.List;
  * Created by Maarten on 28-9-2015.
  */
 public class SteamGame implements ISteamGame {
-    private final SteamAPIWrapper steamAPIWrapper;
+    private final ISteamAPIWrapper steamAPIWrapper;
     private final String appId;
     private String name;
     private List<String> genres;
 
-    public SteamGame(String appId, SteamAPIWrapper steamAPIWrapper) {
+    public SteamGame(String appId, ISteamAPIWrapper steamAPIWrapper) {
         this.steamAPIWrapper = steamAPIWrapper;
         this.appId = appId;
     }

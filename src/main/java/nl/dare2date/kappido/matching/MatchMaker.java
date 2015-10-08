@@ -4,8 +4,8 @@ import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
 import nl.dare2date.kappido.services.MatchParameter;
 import nl.dare2date.kappido.services.MatchType;
-import nl.dare2date.kappido.steam.SteamUser;
-import nl.dare2date.kappido.twitch.TwitchUser;
+import nl.dare2date.kappido.steam.ISteamUser;
+import nl.dare2date.kappido.twitch.ITwitchUser;
 import nl.dare2date.profile.ID2DProfileManager;
 
 import java.util.*;
@@ -16,7 +16,7 @@ import java.util.*;
 public class MatchMaker {
     private final Map<MatchType, IMatcher> matchers;
 
-    public MatchMaker(ID2DProfileManager profileManager, IUserCache<TwitchUser> twitchUserCache, IUserCache<SteamUser> steamUserCache) {
+    public MatchMaker(ID2DProfileManager profileManager, IUserCache<ITwitchUser> twitchUserCache, IUserCache<ISteamUser> steamUserCache) {
         this(new HashMap<MatchType, IMatcher>());
         matchers.put(MatchType.GAMES_WATCHED, new GamesWatchedMatcher(profileManager, twitchUserCache));
         matchers.put(MatchType.MUTUAL_FOLLOWINGS, new MutualFollowingsMatcher(profileManager, twitchUserCache));

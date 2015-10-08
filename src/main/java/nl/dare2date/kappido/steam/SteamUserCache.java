@@ -5,15 +5,15 @@ import nl.dare2date.kappido.common.AbstractUserCache;
 /**
  * Created by Maarten on 6-10-2015.
  */
-public class SteamUserCache extends AbstractUserCache<SteamUser> {
-    private SteamAPIWrapper apiWrapper;
+public class SteamUserCache extends AbstractUserCache<ISteamUser> {
+    private ISteamAPIWrapper apiWrapper;
 
-    public SteamUserCache(SteamAPIWrapper apiWrapper) {
+    public SteamUserCache(ISteamAPIWrapper apiWrapper) {
         this.apiWrapper = apiWrapper;
     }
 
     @Override
-    protected SteamUser createNewUser(String id) {
+    protected ISteamUser createNewUser(String id) {
         return new SteamUser(id, apiWrapper);
     }
 }

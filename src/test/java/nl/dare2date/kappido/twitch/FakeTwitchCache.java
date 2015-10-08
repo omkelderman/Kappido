@@ -5,20 +5,20 @@ import nl.dare2date.kappido.common.IUserCache;
 /**
  * A Twitch User 'cache'. It doesn't cache the values at all, creating a nice stateless object for testing.
  */
-public class FakeTwitchCache implements IUserCache<TwitchUser> {
-    private TwitchAPIWrapper apiWrapper;
+public class FakeTwitchCache implements IUserCache<ITwitchUser> {
+    private ITwitchAPIWrapper apiWrapper;
 
-    public FakeTwitchCache(TwitchAPIWrapper apiWrapper) {
+    public FakeTwitchCache(ITwitchAPIWrapper apiWrapper) {
         this.apiWrapper = apiWrapper;
     }
 
     @Override
-    public TwitchUser getUserById(String id) {
+    public ITwitchUser getUserById(String id) {
         return new TwitchUser(id, apiWrapper);
     }
 
     @Override
-    public void addToCache(TwitchUser twitchUser, String id) {
+    public void addToCache(ITwitchUser twitchUser, String id) {
 
     }
 }

@@ -3,7 +3,6 @@ package nl.dare2date.kappido.matching;
 import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
 import nl.dare2date.kappido.twitch.ITwitchUser;
-import nl.dare2date.kappido.twitch.TwitchUser;
 import nl.dare2date.profile.ID2DProfileManager;
 
 import java.util.HashMap;
@@ -15,9 +14,9 @@ import java.util.Map;
  */
 public abstract class TwitchMatcher implements IMatcher {
     protected ID2DProfileManager profileManager;
-    protected IUserCache<TwitchUser> twitchUserCache;
+    protected IUserCache<ITwitchUser> twitchUserCache;
 
-    public TwitchMatcher(ID2DProfileManager profileManager, IUserCache<TwitchUser> twitchUserCache) {
+    public TwitchMatcher(ID2DProfileManager profileManager, IUserCache<ITwitchUser> twitchUserCache) {
         this.profileManager = profileManager;
         this.twitchUserCache = twitchUserCache;
     }

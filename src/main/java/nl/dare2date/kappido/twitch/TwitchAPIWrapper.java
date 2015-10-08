@@ -19,7 +19,7 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
 
     private static final String FOLLOWING_USERS_URL = "https://api.twitch.tv/kraken/users/%s/follows/channels?direction=DESC&limit=100&offset=%s&sortby=created_at";
     private static final String GET_CHANNEL_URL = "https://api.twitch.tv/kraken/channels/%s";
-    private IUserCache<TwitchUser> userCache;
+    private IUserCache<ITwitchUser> userCache;
 
     public TwitchAPIWrapper() {
         this(new URLResourceProvider());
@@ -35,7 +35,8 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
      * @param userCache
      * @return
      */
-    public void setCache(IUserCache<TwitchUser> userCache) {
+    @Override
+    public void setCache(IUserCache<ITwitchUser> userCache) {
         this.userCache = userCache;
     }
 
@@ -58,6 +59,7 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
         }
     }
 
+    @Override
     public ITwitchUser getUser(String twitchId) {
         try {
             JsonObject root = getJsonForPath(String.format(GET_CHANNEL_URL, twitchId));

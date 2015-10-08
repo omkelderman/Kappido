@@ -5,20 +5,20 @@ import nl.dare2date.kappido.common.IUserCache;
 /**
  * Created by Maarten on 6-10-2015.
  */
-public class FakeSteamCache implements IUserCache<SteamUser> {
-    private final SteamAPIWrapper apiWrapper;
+public class FakeSteamCache implements IUserCache<ISteamUser> {
+    private final ISteamAPIWrapper apiWrapper;
 
-    public FakeSteamCache(SteamAPIWrapper apiWrapper) {
+    public FakeSteamCache(ISteamAPIWrapper apiWrapper) {
         this.apiWrapper = apiWrapper;
     }
 
     @Override
-    public SteamUser getUserById(String id) {
+    public ISteamUser getUserById(String id) {
         return new SteamUser(id, apiWrapper);
     }
 
     @Override
-    public void addToCache(SteamUser steamUser, String id) {
+    public void addToCache(ISteamUser steamUser, String id) {
 
     }
 }

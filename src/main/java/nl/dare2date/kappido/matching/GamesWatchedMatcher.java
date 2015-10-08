@@ -3,7 +3,6 @@ package nl.dare2date.kappido.matching;
 import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
 import nl.dare2date.kappido.twitch.ITwitchUser;
-import nl.dare2date.kappido.twitch.TwitchUser;
 import nl.dare2date.profile.ID2DProfileManager;
 import org.springframework.util.StringUtils;
 
@@ -14,7 +13,7 @@ import java.util.*;
  */
 public class GamesWatchedMatcher extends TwitchMatcher {
 
-    public GamesWatchedMatcher(ID2DProfileManager profileManager, IUserCache<TwitchUser> twitchUserCache) {
+    public GamesWatchedMatcher(ID2DProfileManager profileManager, IUserCache<ITwitchUser> twitchUserCache) {
         super(profileManager, twitchUserCache);
     }
 

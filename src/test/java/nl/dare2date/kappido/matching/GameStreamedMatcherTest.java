@@ -5,8 +5,8 @@ import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
 import nl.dare2date.kappido.twitch.FakeTwitchCache;
 import nl.dare2date.kappido.twitch.FakeTwitchURLResourceProvider;
+import nl.dare2date.kappido.twitch.ITwitchUser;
 import nl.dare2date.kappido.twitch.TwitchAPIWrapper;
-import nl.dare2date.kappido.twitch.TwitchUser;
 import nl.dare2date.profile.FakeD2DProfileManager;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -32,7 +32,7 @@ public class GameStreamedMatcherTest {
     @Before
     public void init() {
         TwitchAPIWrapper apiWrapper = new TwitchAPIWrapper(fakeUrlResourceProvider);
-        IUserCache<TwitchUser> userCache = new FakeTwitchCache(apiWrapper);
+        IUserCache<ITwitchUser> userCache = new FakeTwitchCache(apiWrapper);
         apiWrapper.setCache(userCache);
         matcher = new GamesStreamedMatcher(new FakeD2DProfileManager(), userCache);
     }

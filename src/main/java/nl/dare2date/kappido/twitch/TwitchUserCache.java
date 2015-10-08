@@ -5,16 +5,16 @@ import nl.dare2date.kappido.common.AbstractUserCache;
 /**
  * Created by Maarten on 6-10-2015.
  */
-public class TwitchUserCache extends AbstractUserCache<TwitchUser> {
+public class TwitchUserCache extends AbstractUserCache<ITwitchUser> {
 
-    private TwitchAPIWrapper apiWrapper;
+    private ITwitchAPIWrapper apiWrapper;
 
-    public TwitchUserCache(TwitchAPIWrapper apiWrapper) {
+    public TwitchUserCache(ITwitchAPIWrapper apiWrapper) {
         this.apiWrapper = apiWrapper;
     }
 
     @Override
-    protected TwitchUser createNewUser(String id) {
+    protected ITwitchUser createNewUser(String id) {
         return new TwitchUser(id, apiWrapper);
     }
 }

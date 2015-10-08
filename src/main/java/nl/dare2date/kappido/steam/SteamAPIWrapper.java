@@ -24,7 +24,7 @@ public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper 
     private static final String GET_OWNED_GAMES_PATH = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=%s&steamid=%s";//TODO look into 'include_appinfo' parameter
     private static final String GET_GAME_DETAILS = "http://store.steampowered.com/api/appdetails/?appids=%s";
     private static final String STEAM_API_PATH = "SteamAPIKey.txt"; //Within the resources folder.
-    private IUserCache<SteamUser> userCache;
+    private IUserCache<ISteamUser> userCache;
     private final String apiKey;
 
     public SteamAPIWrapper() {
@@ -51,7 +51,8 @@ public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper 
      * @param userCache
      * @return
      */
-    public void setCache(IUserCache<SteamUser> userCache) {
+    @Override
+    public void setCache(IUserCache<ISteamUser> userCache) {
         this.userCache = userCache;
     }
 

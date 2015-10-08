@@ -4,7 +4,6 @@ import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
 import nl.dare2date.kappido.steam.ISteamGame;
 import nl.dare2date.kappido.steam.ISteamUser;
-import nl.dare2date.kappido.steam.SteamUser;
 import nl.dare2date.profile.ID2DProfileManager;
 
 import java.util.*;
@@ -13,7 +12,7 @@ import java.util.*;
  * Created by Maarten on 6-10-2015.
  */
 public class GamesPlayedMatcher extends SteamMatcher {
-    public GamesPlayedMatcher(ID2DProfileManager profileManager, IUserCache<SteamUser> steamUserCache) {
+    public GamesPlayedMatcher(ID2DProfileManager profileManager, IUserCache<ISteamUser> steamUserCache) {
         super(profileManager, steamUserCache);
     }
 

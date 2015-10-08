@@ -5,8 +5,8 @@ import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
 import nl.dare2date.kappido.steam.FakeSteamCache;
 import nl.dare2date.kappido.steam.FakeSteamURLResourceProvider;
+import nl.dare2date.kappido.steam.ISteamUser;
 import nl.dare2date.kappido.steam.SteamAPIWrapper;
-import nl.dare2date.kappido.steam.SteamUser;
 import nl.dare2date.profile.FakeD2DProfileManager;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -32,7 +32,7 @@ public class GamePlayedMatcherTest {
     @Before
     public void init() {
         SteamAPIWrapper apiWrapper = new SteamAPIWrapper("steamapikey", fakeUrlResourceProvider);
-        IUserCache<SteamUser> userCache = new FakeSteamCache(apiWrapper);
+        IUserCache<ISteamUser> userCache = new FakeSteamCache(apiWrapper);
         apiWrapper.setCache(userCache);
         matcher = new GamesPlayedMatcher(new FakeD2DProfileManager(), userCache);
     }

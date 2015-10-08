@@ -3,7 +3,6 @@ package nl.dare2date.kappido.matching;
 import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
 import nl.dare2date.kappido.twitch.ITwitchUser;
-import nl.dare2date.kappido.twitch.TwitchUser;
 import nl.dare2date.profile.ID2DProfileManager;
 
 import java.util.*;
@@ -12,7 +11,7 @@ import java.util.*;
  * Created by Maarten on 6-10-2015.
  */
 public class MutualFollowingsMatcher extends TwitchMatcher {
-    public MutualFollowingsMatcher(ID2DProfileManager profileManager, IUserCache<TwitchUser> twitchUserCache) {
+    public MutualFollowingsMatcher(ID2DProfileManager profileManager, IUserCache<ITwitchUser> twitchUserCache) {
         super(profileManager, twitchUserCache);
     }
 
