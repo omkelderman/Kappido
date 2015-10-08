@@ -9,7 +9,7 @@ public class TwitchUserCache extends AbstractUserCache<TwitchUser> {
 
     private TwitchAPIWrapper apiWrapper;
 
-    public TwitchUserCache(TwitchAPIWrapper apiWrapper){
+    public TwitchUserCache(TwitchAPIWrapper apiWrapper) {
         this.apiWrapper = apiWrapper;
     }
 

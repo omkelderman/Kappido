@@ -5,7 +5,6 @@ import nl.dare2date.kappido.common.URLResourceProvider;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
 
 /**
  * Created by Olle on 06-10-2015.
@@ -24,15 +23,15 @@ public class FakeSteamURLResourceProvider extends FakeURLResourceProvider {
 
     @Override
     public BufferedReader getReaderForURL(URL url) throws IOException {
-        try{
+        try {
             return super.getReaderForURL(url);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             String path = url.toString();
-            if(!path.startsWith("http://store.steampowered.com/api/appdetails/?appids=")) throw e;
+            if (!path.startsWith("http://store.steampowered.com/api/appdetails/?appids=")) throw e;
             String folderName = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "steam" + File.separatorChar;
             String fileName = "app_" + path.substring(path.indexOf('=') + 1) + ".json";
             File file = new File(folderName + fileName);
-            if(!file.exists()) {
+            if (!file.exists()) {
                 System.out.println(e.getMessage());
                 System.out.println("Generating " + fileName + "...");
 

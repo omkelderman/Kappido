@@ -8,7 +8,7 @@ import nl.dare2date.kappido.common.IUserCache;
 public class FakeTwitchCache implements IUserCache<TwitchUser> {
     private TwitchAPIWrapper apiWrapper;
 
-    public FakeTwitchCache(TwitchAPIWrapper apiWrapper){
+    public FakeTwitchCache(TwitchAPIWrapper apiWrapper) {
         this.apiWrapper = apiWrapper;
     }
 

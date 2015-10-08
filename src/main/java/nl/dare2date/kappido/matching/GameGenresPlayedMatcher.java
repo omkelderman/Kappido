@@ -18,19 +18,19 @@ public class GameGenresPlayedMatcher extends SteamMatcher {
     }
 
     @Override
-    protected List<MatchEntry> findMatches(int dare2DateUser, ISteamUser steamUser, Map<Integer, ISteamUser> steamDare2DateUsers){
+    protected List<MatchEntry> findMatches(int dare2DateUser, ISteamUser steamUser, Map<Integer, ISteamUser> steamDare2DateUsers) {
         List<MatchEntry> matches = new ArrayList<>();
 
         Set<String> gameGenresPlayed = new HashSet<>();
-        for(ISteamGame game : steamUser.getOwnedGames()){
-            for(String genre : game.getGenres()){
+        for (ISteamGame game : steamUser.getOwnedGames()) {
+            for (String genre : game.getGenres()) {
                 gameGenresPlayed.add(genre);
             }
         }
-        for(Map.Entry<Integer, ISteamUser> otherUser : steamDare2DateUsers.entrySet()){
-            if(otherUser.getKey() != dare2DateUser){ //We can't match with ourselves..
-                for(ISteamGame otherUserGame : otherUser.getValue().getOwnedGames()){
-                    for(String otherUserGenre : otherUserGame.getGenres()) {
+        for (Map.Entry<Integer, ISteamUser> otherUser : steamDare2DateUsers.entrySet()) {
+            if (otherUser.getKey() != dare2DateUser) { //We can't match with ourselves..
+                for (ISteamGame otherUserGame : otherUser.getValue().getOwnedGames()) {
+                    for (String otherUserGenre : otherUserGame.getGenres()) {
                         if (gameGenresPlayed.contains(otherUserGenre)) {
                             MatchEntry entry = new MatchEntry();
                             entry.setUserId(otherUser.getKey());

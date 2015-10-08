@@ -11,7 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Maarten on 05-Oct-15.
@@ -21,7 +22,7 @@ public class MatchMakerTest {
     private MatchMaker matchMaker;
 
     @Before
-    public void init(){
+    public void init() {
         Map<MatchType, IMatcher> matchers = new HashMap<>();
         matchers.put(MatchType.MUTUAL_FOLLOWINGS, new TestMatcher());
         matchers.put(MatchType.GAMES_PLAYED, new TestMatcher());
@@ -32,7 +33,7 @@ public class MatchMakerTest {
      * Make sure the matches that are created are sorted from the user with the highest matching probability to the lowest.
      */
     @Test
-    public void checkSortOrder(){
+    public void checkSortOrder() {
         List<MatchParameter> matchParameters = new ArrayList<MatchParameter>();
 
         MatchParameter parameter = new MatchParameter();
@@ -48,7 +49,7 @@ public class MatchMakerTest {
      * Validate the expected matching probabilities.
      */
     @Test
-    public void checkCombinedProbabilities(){
+    public void checkCombinedProbabilities() {
         List<MatchParameter> matchParameters = new ArrayList<MatchParameter>();
 
         MatchParameter parameter = new MatchParameter();

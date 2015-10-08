@@ -17,12 +17,12 @@ public class MutualFollowingsMatcher extends TwitchMatcher {
     }
 
     @Override
-    protected List<MatchEntry> findMatches(int dare2DateUser, ITwitchUser twitchUser, Map<Integer, ITwitchUser> twitchDare2DateUsers){
+    protected List<MatchEntry> findMatches(int dare2DateUser, ITwitchUser twitchUser, Map<Integer, ITwitchUser> twitchDare2DateUsers) {
         List<MatchEntry> matches = new ArrayList<>();
 
         Set<ITwitchUser> followingUsers = new HashSet<>(twitchUser.getFollowingUsers());
-        for(Map.Entry<Integer, ITwitchUser> otherTwitchUser : twitchDare2DateUsers.entrySet()){
-            if(otherTwitchUser.getKey() != dare2DateUser) { //We can't match with ourselves..
+        for (Map.Entry<Integer, ITwitchUser> otherTwitchUser : twitchDare2DateUsers.entrySet()) {
+            if (otherTwitchUser.getKey() != dare2DateUser) { //We can't match with ourselves..
                 for (ITwitchUser user : otherTwitchUser.getValue().getFollowingUsers()) {
                     if (followingUsers.contains(user)) {
                         MatchEntry entry = new MatchEntry();

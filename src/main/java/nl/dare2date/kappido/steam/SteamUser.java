@@ -22,13 +22,13 @@ public class SteamUser implements ISteamUser {
 
     @Override
     public List<ISteamGame> getOwnedGames() {
-        if(ownedGames == null){
+        if (ownedGames == null) {
             ownedGames = steamAPIWrapper.getOwnedGames(steamId);
         }
         return ownedGames;
     }
 
-    public String toString(){
+    public String toString() {
         return getSteamId();
     }
 

@@ -10,7 +10,6 @@ import java.util.List;
 public interface IMatcher {
 
     /**
-     *
      * @param dare2DateUser
      * @return A map of which the keys are Dare2Date user id's, and the values the match probability of the users.
      */

@@ -8,7 +8,7 @@ import nl.dare2date.kappido.common.AbstractUserCache;
 public class SteamUserCache extends AbstractUserCache<SteamUser> {
     private SteamAPIWrapper apiWrapper;
 
-    public SteamUserCache(SteamAPIWrapper apiWrapper){
+    public SteamUserCache(SteamAPIWrapper apiWrapper) {
         this.apiWrapper = apiWrapper;
     }
 

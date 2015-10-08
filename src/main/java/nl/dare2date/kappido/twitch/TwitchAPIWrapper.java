@@ -31,10 +31,11 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
 
     /**
      * Setting the cache via a setter as opposed to via the constructor, as due to a circular reference with TwitchAPIWrapper and TwitchUserCache they can't set each other via the constructor.
+     *
      * @param userCache
      * @return
      */
-    public void setCache(IUserCache<TwitchUser> userCache){
+    public void setCache(IUserCache<TwitchUser> userCache) {
         this.userCache = userCache;
     }
 
@@ -42,18 +43,18 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
     public List<ITwitchUser> getFollowingUsers(String twitchId) {
         try {
             List<ITwitchUser> followingUsers = new ArrayList<>();
-            for(int i = 0; ; i+= 100){
+            for (int i = 0; ; i += 100) {
                 JsonObject root = getJsonForPath(String.format(FOLLOWING_USERS_URL, twitchId, i));
                 JsonArray followingUserArray = root.get("follows").getAsJsonArray();
                 for (JsonElement userElement : followingUserArray) {
                     JsonObject channel = userElement.getAsJsonObject().get("channel").getAsJsonObject();
                     followingUsers.add(getUserForChannelObject(channel));
                 }
-                if(i + 100 >= root.get("_total").getAsInt()) break; //When we've read all users, we're done requesting.
+                if (i + 100 >= root.get("_total").getAsInt()) break; //When we've read all users, we're done requesting.
             }
             return followingUsers;
         } catch (IOException e) {
-            throw new RuntimeException(e);//TODO handle properly
+            throw new RuntimeException(e);
         }
     }
 
@@ -62,16 +63,16 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
             JsonObject root = getJsonForPath(String.format(GET_CHANNEL_URL, twitchId));
             return getUserForChannelObject(root);
         } catch (IOException e) {
-            throw new RuntimeException(e);//TODO handle properly
+            throw new RuntimeException(e);
         }
     }
 
-    private ITwitchUser getUserForChannelObject(JsonObject channel){
+    private ITwitchUser getUserForChannelObject(JsonObject channel) {
         String twitchId = channel.get("name").getAsString();
         JsonElement gameElement = channel.get("game");
         String lastPlayedGame = gameElement.isJsonNull() ? "" : gameElement.getAsString();
         TwitchUser user = new TwitchUser(twitchId, this, lastPlayedGame);
-        if(userCache != null) userCache.addToCache(user, twitchId);
+        if (userCache != null) userCache.addToCache(user, twitchId);
         return user;
     }
 }

@@ -1,6 +1,5 @@
 package nl.dare2date.kappido.twitch;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,12 +13,12 @@ public class TwitchUser implements ITwitchUser {
     private List<ITwitchUser> followingUsers;
 
 
-    TwitchUser(String twitchId, TwitchAPIWrapper apiWrapper){
+    TwitchUser(String twitchId, TwitchAPIWrapper apiWrapper) {
         this.twitchId = twitchId.toLowerCase();
         this.apiWrapper = apiWrapper;
     }
 
-    TwitchUser(String twitchId, TwitchAPIWrapper apiWrapper, String lastPlayedGame){
+    TwitchUser(String twitchId, TwitchAPIWrapper apiWrapper, String lastPlayedGame) {
         this(twitchId, apiWrapper);
         this.lastPlayedGame = lastPlayedGame;
     }
@@ -30,22 +29,22 @@ public class TwitchUser implements ITwitchUser {
     }
 
     @Override
-    public String getLastPlayedGame(){
-        if(lastPlayedGame == null){
+    public String getLastPlayedGame() {
+        if (lastPlayedGame == null) {
             return apiWrapper.getUser(twitchId).getLastPlayedGame(); //Retrieve from the API, which will put this new user to the user cache. Therefore this lastPlayedGame doesn't need to be set.
         }
         return lastPlayedGame;
     }
 
     @Override
-    public List<ITwitchUser> getFollowingUsers(){
-        if(followingUsers == null){
+    public List<ITwitchUser> getFollowingUsers() {
+        if (followingUsers == null) {
             followingUsers = apiWrapper.getFollowingUsers(twitchId);
         }
         return followingUsers;
     }
 
-    public String toString(){
+    public String toString() {
         return getTwitchId();
     }
 

@@ -1,9 +1,7 @@
 package nl.dare2date.kappido.matching;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import nl.dare2date.kappido.common.IUserCache;
 import nl.dare2date.kappido.services.MatchEntry;
-import nl.dare2date.kappido.steam.ISteamUser;
 import nl.dare2date.kappido.twitch.ITwitchUser;
 import nl.dare2date.kappido.twitch.TwitchUser;
 import nl.dare2date.profile.ID2DProfileManager;
@@ -19,7 +17,7 @@ public abstract class TwitchMatcher implements IMatcher {
     protected ID2DProfileManager profileManager;
     protected IUserCache<TwitchUser> twitchUserCache;
 
-    public TwitchMatcher(ID2DProfileManager profileManager, IUserCache<TwitchUser> twitchUserCache){
+    public TwitchMatcher(ID2DProfileManager profileManager, IUserCache<TwitchUser> twitchUserCache) {
         this.profileManager = profileManager;
         this.twitchUserCache = twitchUserCache;
     }
@@ -27,15 +25,15 @@ public abstract class TwitchMatcher implements IMatcher {
     @Override
     public List<MatchEntry> findMatches(int dare2DateUser) {
         String twitchId = profileManager.getTwitchId(dare2DateUser);
-        if(twitchId == null) throw new IllegalStateException("No Twitch Id for user " + dare2DateUser); //TODO handle differently?
+        if (twitchId == null) throw new IllegalStateException("No Twitch Id for user " + dare2DateUser);
 
         ITwitchUser twitchUser = twitchUserCache.getUserById(twitchId);
-        if(twitchUser == null) throw new IllegalStateException("No Twitch user for Twitch Id " + twitchId); //TODO handle differently?
+        if (twitchUser == null) throw new IllegalStateException("No Twitch user for Twitch Id " + twitchId);
 
         return findMatches(dare2DateUser, twitchUser, getTwitchDare2DateUsers());
     }
 
-    private Map<Integer, ITwitchUser> getTwitchDare2DateUsers(){
+    private Map<Integer, ITwitchUser> getTwitchDare2DateUsers() {
         Map<Integer, ITwitchUser> userMap = new HashMap<>();
         for (int dare2DateUser : profileManager.getAllUsers()) {
             String twitchId = profileManager.getTwitchId(dare2DateUser);
@@ -50,9 +48,8 @@ public abstract class TwitchMatcher implements IMatcher {
     }
 
     /**
-     *
      * @param dare2DateUser
-     * @param twitchUser Steam user object belonging to the dare2DateUser issuing the match.
+     * @param twitchUser           Steam user object belonging to the dare2DateUser issuing the match.
      * @param twitchDare2DateUsers Key value map with the keys being dare2date user id's, and their Twitch user object as value.
      * @return
      */
