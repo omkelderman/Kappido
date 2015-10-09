@@ -11,6 +11,10 @@ import java.util.Map;
 
 /**
  * Created by Maarten on 6-10-2015.
+ * Finds matches based on the games users are streaming.
+ *
+ * Use case:
+ * "Find match by comparing the games streamed."
  */
 public class GamesStreamedMatcher extends TwitchMatcher {
     public GamesStreamedMatcher(ID2DProfileManager profileManager, IUserCache<ITwitchUser> twitchUserCache) {

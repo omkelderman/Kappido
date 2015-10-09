@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Maarten on 6-10-2015.
+ * A test to verify that the {@link MutualFollowingsMatcher} works correctly. It uses a fake cache and a fake URL handler
+ * to isolate the test.
  */
 public class MutualFollowingsMatcherTest {
 

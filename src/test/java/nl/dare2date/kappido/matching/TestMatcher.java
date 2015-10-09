@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Created by Maarten on 05-Oct-15.
+ * Test match class used to unit test the MatchMaker in {@link MatchMakerTest}
+ * Hardcodes a match with user id 0 with a probability of 0.5, and a match with user id 1, with a probability of 0.3.
  */
 public class TestMatcher implements IMatcher {
     @Override

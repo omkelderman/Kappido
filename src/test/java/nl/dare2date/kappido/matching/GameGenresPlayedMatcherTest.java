@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Maarten on 6-10-2015.
+ * A test to verify that the {@link GameGenresPlayedMatcher} works correctly. It uses a fake cache and a fake URL handler
+ * to isolate the test.
  */
 public class GameGenresPlayedMatcherTest {
 
@@ -39,14 +41,14 @@ public class GameGenresPlayedMatcherTest {
 
     @Test
     public void checkHasMatch() {
-        List<MatchEntry> matches = matcher.findMatches(1);
-        double omkeldermanProbability = 0;
+        List<MatchEntry> matches = matcher.findMatches(UserIDs.STEAM_OMKELDERMAN);
+        double minemaartenProbability = 0;
         for (MatchEntry match : matches) {
-            if (match.getUserId() == 1) {
-                omkeldermanProbability += match.getProbability();
+            if (match.getUserId() == UserIDs.STEAM_MINEMAARTEN) {
+                minemaartenProbability += match.getProbability();
             }
         }
-        assertEquals(0, omkeldermanProbability, 0.001);
+        assertEquals(9, minemaartenProbability, 0.001); //9 is the amount of game genres MineMaarten and omkelderman match on.
     }
 
 }

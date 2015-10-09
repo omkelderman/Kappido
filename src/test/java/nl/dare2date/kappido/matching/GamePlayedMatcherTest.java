@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Maarten on 6-10-2015.
+ * A test to verify that the {@link GamesPlayedMatcher} works correctly. It uses a fake cache and a fake URL handler
+ * to isolate the test.
  */
 public class GamePlayedMatcherTest {
 
@@ -37,6 +39,9 @@ public class GamePlayedMatcherTest {
         matcher = new GamesPlayedMatcher(new FakeD2DProfileManager(), userCache);
     }
 
+    /**
+     * Check matches of D2D user omkelderman with MineMaarten and Xikeon
+     */
     @Test
     public void checkHasMatchForOmkelderman() {
         List<MatchEntry> matches = matcher.findMatches(UserIDs.STEAM_OMKELDERMAN);
@@ -52,8 +57,8 @@ public class GamePlayedMatcherTest {
                     break;
             }
         }
-        assertEquals(2, minemaartenProbability, 0.001);
-        assertEquals(44, xikeonProbability, 0.001);
+        assertEquals(2, minemaartenProbability, 0.001); //2 is the amount of games MineMaarten and omkelderman match on.
+        assertEquals(44, xikeonProbability, 0.001); //44 is the amount of games Xikeon and omkelderman match on.
     }
 
     @Test
@@ -71,7 +76,7 @@ public class GamePlayedMatcherTest {
                     break;
             }
         }
-        assertEquals(3, quetzProbability, 0.001);
-        assertEquals(2, happystickProbability, 0.001);
+        assertEquals(3, quetzProbability, 0.001); //3 is the amount of games Quetz and MineMaarten match on.
+        assertEquals(2, happystickProbability, 0.001); //2 is the amount of games happystick and MineMaarten match on.
     }
 }

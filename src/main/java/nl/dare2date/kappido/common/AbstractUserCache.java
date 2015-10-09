@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 /**
  * Created by Maarten on 6-10-2015.
+ * Basic partial cache implementation. Caches user objects and returns them when available in the cache. Creates
+ * a new user by calling an abstract factory method when not in cache.
  */
 public abstract class AbstractUserCache<User> implements IUserCache<User> {
     private HashMap<String, User> cache = new HashMap<>();

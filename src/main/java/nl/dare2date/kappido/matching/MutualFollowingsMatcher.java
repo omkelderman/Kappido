@@ -9,6 +9,10 @@ import java.util.*;
 
 /**
  * Created by Maarten on 6-10-2015.
+ * Finds matches based on the streamers users are following.
+ *
+ * Use case:
+ * "Find match by comparing the mutual followers."
  */
 public class MutualFollowingsMatcher extends TwitchMatcher {
     public MutualFollowingsMatcher(ID2DProfileManager profileManager, IUserCache<ITwitchUser> twitchUserCache) {
@@ -19,14 +23,17 @@ public class MutualFollowingsMatcher extends TwitchMatcher {
     protected List<MatchEntry> findMatches(int dare2DateUser, ITwitchUser twitchUser, Map<Integer, ITwitchUser> twitchDare2DateUsers) {
         List<MatchEntry> matches = new ArrayList<>();
 
+        //Get a set of the users the user is following (so we can benefit of O(1) when doing a contains()).
         Set<ITwitchUser> followingUsers = new HashSet<>(twitchUser.getFollowingUsers());
+
+        //Match based on mutual followings
         for (Map.Entry<Integer, ITwitchUser> otherTwitchUser : twitchDare2DateUsers.entrySet()) {
             if (otherTwitchUser.getKey() != dare2DateUser) { //We can't match with ourselves..
                 for (ITwitchUser user : otherTwitchUser.getValue().getFollowingUsers()) {
                     if (followingUsers.contains(user)) {
                         MatchEntry entry = new MatchEntry();
                         entry.setUserId(otherTwitchUser.getKey());
-                        entry.setProbability(1); //It could be that multiple shared following users, in that case the probabilities will be combined in MatchMaker.
+                        entry.setProbability(1);
                         matches.add(entry);
                     }
                 }

@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Maarten on 6-10-2015.
+ * A test to verify that the {@link GamesWatchedMatcher} works correctly. It uses a fake cache and a fake URL handler
+ * to isolate the test.
  */
 public class GameWatchedMatcherTest {
 
@@ -52,8 +54,8 @@ public class GameWatchedMatcherTest {
                     break;
             }
         }
-        assertEquals(135, staiainProbability, 0.001);
-        assertEquals(7, minemaartenProbability, 0.001);
+        assertEquals(135, staiainProbability, 0.001);   //135 is the amount of steamers Staiain is following that stream a game omkelderman watches.
+        assertEquals(7, minemaartenProbability, 0.001); //7 is the amount of steamers MineMaarten is following that stream a game omkelderman watches.
     }
 
     @Test
@@ -71,8 +73,8 @@ public class GameWatchedMatcherTest {
                     break;
             }
         }
-        assertEquals(33, quetziProbability, 0.001);
-        assertEquals(4, happystickProbability, 0.001);
+        assertEquals(33, quetziProbability, 0.001);     //33 is the amount of steamers Quetzi is following that stream a game MineMaarten watches.
+        assertEquals(4, happystickProbability, 0.001);  //4 is the amount of steamers happystick is following that stream a game MineMaarten watches.
     }
 
 }

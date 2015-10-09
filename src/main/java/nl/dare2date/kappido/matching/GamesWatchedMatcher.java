@@ -10,6 +10,10 @@ import java.util.*;
 
 /**
  * Created by Maarten on 6-10-2015.
+ * Finds matches based on the games users are watching on Twitch.
+ *
+ * Use case:
+ * "Find match by comparing the game genres watched."
  */
 public class GamesWatchedMatcher extends TwitchMatcher {
 
@@ -36,7 +40,7 @@ public class GamesWatchedMatcher extends TwitchMatcher {
                     if (watchedGames.contains(otherFollowingUser.getLastPlayedGame())) {
                         MatchEntry entry = new MatchEntry();
                         entry.setUserId(otherTwitchUser.getKey());
-                        entry.setProbability(1); //It could be that multiple games watched are shared, in that case the probabilities will be combined in MatchMaker.
+                        entry.setProbability(1);
                         matches.add(entry);
                     }
                 }

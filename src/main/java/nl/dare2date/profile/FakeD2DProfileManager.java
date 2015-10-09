@@ -10,16 +10,20 @@ import java.util.*;
 
 /**
  * Created by Maarten on 05-Oct-15.
+ * A fake profile manager, used to similate a database of users and their info. The 'database' consists of a
+ * resources/fakeUsers.json.
  */
 public class FakeD2DProfileManager implements ID2DProfileManager {
     private static Map<Integer, FakeD2DUser> users;
 
     public FakeD2DProfileManager() {
         InputStream fakeUsersResource = FakeD2DProfileManager.class.getClassLoader().getResourceAsStream("fakeUsers.json");
-        if (fakeUsersResource == null) throw new IllegalStateException("Could not find the fake users json-file!");
+        if (fakeUsersResource == null) throw new IllegalStateException("Could not find the fake users JSON file!");
         Gson gson = new Gson();
 
         users = new HashMap<>();
+
+        //Deserialize the json file into a list of Dare2Date users.
         Type fakeD2DUserListType = new TypeToken<List<FakeD2DUser>>() {
         }.getType();
         ArrayList<FakeD2DUser> userList = gson.fromJson(new InputStreamReader(fakeUsersResource), fakeD2DUserListType);
