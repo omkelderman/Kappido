@@ -87,18 +87,18 @@ public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper 
             if (subRoot.has("data")) {
                 JsonObject gameDetails = subRoot.get("data").getAsJsonObject();
                 game.setName(gameDetails.get("name").getAsString());
-                List<String> genres = new ArrayList<>();
+                List<String> genreIds = new ArrayList<>();
                 if (gameDetails.has("genres")) {
                     for (JsonElement genreElement : gameDetails.get("genres").getAsJsonArray()) {
-                        genres.add(genreElement.getAsJsonObject().get("description").getAsString());//TODO maybe use 'id' instead of 'description'?
+                        genreIds.add(genreElement.getAsJsonObject().get("id").getAsString());//TODO maybe use 'id' instead of 'description'?
                     }
-                    game.setGenres(genres);
+                    game.setGenreIds(genreIds);
                 } else {
-                    game.setGenres(new ArrayList<String>());
+                    game.setGenreIds(Collections.<String>emptyList());
                 }
             } else {
                 game.setName("<UNKNOWN>");
-                game.setGenres(Collections.<String>emptyList());
+                game.setGenreIds(Collections.<String>emptyList());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

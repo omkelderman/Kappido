@@ -41,7 +41,7 @@ public class SteamAPIWrapperTest {
     public void checkGameDetails() {
         SteamGame garrysMod = new SteamGame(GARRYS_MOD_APP_ID, steamAPIWrapper);
         assertEquals(garrysMod.getName(), "Garry's Mod");
-        assertTrue(garrysMod.getGenres().contains("Simulation"));
-        assertTrue(garrysMod.getGenres().contains("Indie"));
+        assertTrue(garrysMod.getGenreIds().contains("23"));//Genre Id of Simulation
+        assertTrue(garrysMod.getGenreIds().contains("28"));//Genre Id of Indie
     }
 }

@@ -22,14 +22,14 @@ public class GameGenresPlayedMatcher extends SteamMatcher {
 
         Set<String> gameGenresPlayed = new HashSet<>();
         for (ISteamGame game : steamUser.getOwnedGames()) {
-            for (String genre : game.getGenres()) {
+            for (String genre : game.getGenreIds()) {
                 gameGenresPlayed.add(genre);
             }
         }
         for (Map.Entry<Integer, ISteamUser> otherUser : steamDare2DateUsers.entrySet()) {
             if (otherUser.getKey() != dare2DateUser) { //We can't match with ourselves..
                 for (ISteamGame otherUserGame : otherUser.getValue().getOwnedGames()) {
-                    for (String otherUserGenre : otherUserGame.getGenres()) {
+                    for (String otherUserGenre : otherUserGame.getGenreIds()) {
                         if (gameGenresPlayed.contains(otherUserGenre)) {
                             MatchEntry entry = new MatchEntry();
                             entry.setUserId(otherUser.getKey());

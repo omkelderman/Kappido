@@ -33,12 +33,12 @@ public class SteamGame implements ISteamGame {
     }
 
     @Override
-    public void setGenres(List<String> genres) {
+    public void setGenreIds(List<String> genres) {
         this.genres = genres;
     }
 
     @Override
-    public List<String> getGenres() {
+    public List<String> getGenreIds() {
         if (genres == null) steamAPIWrapper.addGameDetails(this);
         return genres;
     }

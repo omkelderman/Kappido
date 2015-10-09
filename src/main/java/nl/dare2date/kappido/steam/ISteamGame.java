@@ -12,7 +12,7 @@ public interface ISteamGame {
 
     String getName();
 
-    void setGenres(List<String> genres);
+    void setGenreIds(List<String> genres);
 
-    List<String> getGenres();
+    List<String> getGenreIds();
 }
