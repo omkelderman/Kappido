@@ -34,11 +34,15 @@
     <simpleType name="MatchType">
         <restriction base="NCName">
             <enumeration value="gamesWatched"/>
-            <enumeration value="genresWatched"/>
+            <!--
+                <enumeration value="genresWatched"/>
+                We wanted to do a matching algorithm based on which genres of games are watched on Twitch. The API
+                doesn't allow for this though :(.
+            -->
             <enumeration value="gamesStreamed"/>
             <enumeration value="mutualFollowings"/>
             <enumeration value="gamesPlayed"/>
             <enumeration value="genresPlayed"/>
-        </restriction>
-    </simpleType>
-</schema>
+          </restriction>
+      </simpleType>
+  </schema>
