@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.URL;
 
 /**
- * Created by Olle on 06-10-2015.
+ * A {@link FakeURLResourceProvider} that does exactly enough needed for the Unit-Tests to pass
  */
 public class FakeSteamURLResourceProvider extends FakeURLResourceProvider {
     public FakeSteamURLResourceProvider() {

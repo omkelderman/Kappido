@@ -14,10 +14,20 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
 
+/**
+ * The spring-ws endpoint used by this application
+ */
 @Endpoint
 public class KappidoEndpoint {
     private final MatchMaker matchMaker;
 
+    /**
+     * Creates the endpoint with various needed objects
+     *
+     * @param profileManager   The profile manager to use
+     * @param twitchAPIWrapper The twitch-API-wrapper to use
+     * @param steamAPIWrapper  The steam-API-wrapper to use
+     */
     @Autowired
     public KappidoEndpoint(ID2DProfileManager profileManager, ITwitchAPIWrapper twitchAPIWrapper, ISteamAPIWrapper steamAPIWrapper) {
         TwitchUserCache twitchUserCache = new TwitchUserCache(twitchAPIWrapper);
@@ -29,6 +39,12 @@ public class KappidoEndpoint {
         matchMaker = new MatchMaker(profileManager, twitchUserCache, steamUserCache);
     }
 
+    /**
+     * Handles the MatchRequest-SOAP-message
+     *
+     * @param req The request object containing the request-parameters
+     * @return The response-object used to create a SOAP-response
+     */
     @PayloadRoot(localPart = "MatchRequest", namespace = "http://www.han.nl/schemas/messages")
     @ResponsePayload
     public MatchResponse calculateMatch(@RequestPayload MatchRequest req) {

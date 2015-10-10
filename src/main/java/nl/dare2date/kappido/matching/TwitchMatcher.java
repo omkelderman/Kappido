@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Maarten on 6-10-2015.
  * Abstract Twitch based matching class extended by all Twitch-based matching classes.
  */
 public abstract class TwitchMatcher implements IMatcher {
@@ -25,6 +24,7 @@ public abstract class TwitchMatcher implements IMatcher {
     /**
      * Does things required for all Twitch-based matchers: Retrieves the Twitch account info of the user wanting to match,
      * and gets a list of all Dare2Date users that have a Twitch account.
+     *
      * @param dare2DateUser The user that is used to match with.
      * @return A list of Dare2Date user id's and their matching probability with the dare2DateUser. The list can
      * contain duplicates of the same user id's. In the matchmaking algorithm these are combined by adding up the
@@ -43,6 +43,7 @@ public abstract class TwitchMatcher implements IMatcher {
 
     /**
      * Returns a collection of all Dare2Date users that have a valid Twitch account.
+     *
      * @return a map with all Dare2Date users that have a Twitch account, with the key being the Dare2Date user id,
      * and the value the Twitch User details.
      */
@@ -63,10 +64,11 @@ public abstract class TwitchMatcher implements IMatcher {
     /**
      * Called when potential matches for a given Dare2Date user are requested. The method should return a list of
      * potential matches and their probability.
-     * @param dare2DateUser
+     *
+     * @param dare2DateUser        a Dare2Date user-id
      * @param twitchUser           Steam user object belonging to the dare2DateUser issuing the match.
      * @param twitchDare2DateUsers Key value map with the keys being dare2date user id's, and their Twitch user object as value.
-     * @returnA list of Dare2Date user id's and their matching probability with the dare2DateUser. The list can
+     * @return A list of Dare2Date user id's and their matching probability with the dare2DateUser. The list can
      * contain duplicates of the same user id's. In the matchmaking algorithm these are combined by adding up the
      * probabilities.
      */

@@ -9,7 +9,6 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 /**
- * Created by Maarten on 05-Oct-15.
  * A fake profile manager, used to similate a database of users and their info. The 'database' consists of a
  * resources/fakeUsers.json.
  */

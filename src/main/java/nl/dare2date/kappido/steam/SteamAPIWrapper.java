@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Maarten on 28-Sep-15.
+ * Default implementation of {@link ISteamAPIWrapper}
  */
 public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper {
 
@@ -27,10 +27,44 @@ public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper 
     private IUserCache<ISteamUser> userCache;
     private final String apiKey;
 
+    /**
+     * Creates a {@link SteamAPIWrapper} with the default {@link URLResourceProvider} and the API-key found in the
+     * application resources. A file with the name <code>SteamAPIKey.txt</code> must be present in the application
+     * resources root containing the api-key to use on the first line.
+     *
+     * @throws IllegalStateException if the api-key file was not found or was not readable
+     */
     public SteamAPIWrapper() {
-        this(getDefaultSteamAPIKey(), new URLResourceProvider());
+        this(getDefaultSteamAPIKey());
     }
 
+    /**
+     * Creates a {@link SteamAPIWrapper} with the default {@link URLResourceProvider} and given api-key
+     *
+     * @param apiKey The steam-api-key to use
+     */
+    public SteamAPIWrapper(String apiKey) {
+        this(apiKey, new URLResourceProvider());
+    }
+
+    /**
+     * Creates a {@link SteamAPIWrapper} with the given {@link URLResourceProvider} and the API-key found in the
+     * application resources. A file with the name <code>SteamAPIKey.txt</code> must be present in the application
+     * resources root containing the api-key to use on the first line.
+     *
+     * @param urlResourceProvider The {@link URLResourceProvider} to use while requesting data
+     * @throws IllegalStateException if the api-key file was not found or was not readable
+     */
+    public SteamAPIWrapper(IURLResourceProvider urlResourceProvider) {
+        this(getDefaultSteamAPIKey(), urlResourceProvider);
+    }
+
+    /**
+     * Creates a {@link SteamAPIWrapper} with the given {@link URLResourceProvider} and given api-key.
+     *
+     * @param apiKey              The steam-api-key to use
+     * @param urlResourceProvider The {@link URLResourceProvider} to use while requesting data
+     */
     public SteamAPIWrapper(String apiKey, IURLResourceProvider urlResourceProvider) {
         super(urlResourceProvider);
         this.apiKey = apiKey;
@@ -46,23 +80,26 @@ public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper 
     }
 
     /**
-     * Setting the cache via a setter as opposed to via the constructor, as due to a circular reference with SteamAPIWrapper and SteamUserCache they can't set each other via the constructor.
-     *
-     * @param userCache
-     * @return
+     * {@inheritDoc}
+     * <p>
+     * Setting the cache via a setter as opposed to via the constructor, as due to a circular reference with
+     * SteamAPIWrapper and SteamUserCache they can't set each other via the constructor.
      */
     @Override
     public void setCache(IUserCache<ISteamUser> userCache) {
         this.userCache = userCache;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ISteamGame> getOwnedGames(String steamId) {
         try {
             JsonObject root = getJsonForPath(String.format(GET_OWNED_GAMES_PATH, apiKey, steamId));
-            JsonArray followingUserArray = root.get("response").getAsJsonObject().get("games").getAsJsonArray();
+            JsonArray ownedGamesArray = root.get("response").getAsJsonObject().get("games").getAsJsonArray();
             List<ISteamGame> ownedGames = new ArrayList<>();
-            for (JsonElement ownedGameElement : followingUserArray) {
+            for (JsonElement ownedGameElement : ownedGamesArray) {
                 JsonObject ownedGameObject = ownedGameElement.getAsJsonObject();
                 ownedGames.add(new SteamGame(ownedGameObject.get("appid").getAsString(), this));//TODO utilize the 'playtime_forever' key.
             }
@@ -72,6 +109,9 @@ public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ISteamUser getUser(String steamId) {
         SteamUser user = new SteamUser(steamId, this);
@@ -79,6 +119,9 @@ public class SteamAPIWrapper extends JsonAPIWrapper implements ISteamAPIWrapper 
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addGameDetails(ISteamGame game) {
         try {

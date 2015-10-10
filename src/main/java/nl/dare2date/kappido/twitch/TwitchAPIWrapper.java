@@ -13,33 +13,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Maarten on 28-Sep-15.
+ * Default implementation of {@link ITwitchAPIWrapper}
  */
 public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrapper {
-
     private static final String FOLLOWING_USERS_URL = "https://api.twitch.tv/kraken/users/%s/follows/channels?direction=DESC&limit=100&offset=%s&sortby=created_at";
     private static final String GET_CHANNEL_URL = "https://api.twitch.tv/kraken/channels/%s";
     private IUserCache<ITwitchUser> userCache;
 
+    /**
+     * Creates a new api-wrapper with the default {@link URLResourceProvider}
+     */
     public TwitchAPIWrapper() {
         this(new URLResourceProvider());
     }
 
+    /**
+     * Creates a new api-wrapper with the given {@link URLResourceProvider}
+     *
+     * @param urlResourceProvider The {@link URLResourceProvider} to use while requesting data
+     */
     public TwitchAPIWrapper(IURLResourceProvider urlResourceProvider) {
         super(urlResourceProvider);
     }
 
     /**
-     * Setting the cache via a setter as opposed to via the constructor, as due to a circular reference with TwitchAPIWrapper and TwitchUserCache they can't set each other via the constructor.
-     *
-     * @param userCache
-     * @return
+     * {@inheritDoc}
+     * <p>
+     * Setting the cache via a setter as opposed to via the constructor, as due to a circular reference with
+     * TwitchAPIWrapper and TwitchUserCache they can't set each other via the constructor.
      */
     @Override
     public void setCache(IUserCache<ITwitchUser> userCache) {
         this.userCache = userCache;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ITwitchUser> getFollowingUsers(String twitchId) {
         try {
@@ -59,6 +69,9 @@ public class TwitchAPIWrapper extends JsonAPIWrapper implements ITwitchAPIWrappe
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ITwitchUser getUser(String twitchId) {
         try {

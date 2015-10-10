@@ -3,7 +3,7 @@ package nl.dare2date.kappido.twitch;
 import nl.dare2date.kappido.common.FakeURLResourceProvider;
 
 /**
- * Created by Olle on 06-10-2015.
+ * A {@link FakeURLResourceProvider} that does exactly enough needed for the Unit-Tests to pass
  */
 public class FakeTwitchURLResourceProvider extends FakeURLResourceProvider {
     public FakeTwitchURLResourceProvider() {

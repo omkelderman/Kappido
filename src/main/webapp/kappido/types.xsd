@@ -43,6 +43,6 @@
             <enumeration value="mutualFollowings"/>
             <enumeration value="gamesPlayed"/>
             <enumeration value="genresPlayed"/>
-          </restriction>
-      </simpleType>
-  </schema>
+        </restriction>
+    </simpleType>
+</schema>

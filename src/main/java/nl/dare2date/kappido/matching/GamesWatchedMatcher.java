@@ -9,9 +9,8 @@ import org.springframework.util.StringUtils;
 import java.util.*;
 
 /**
- * Created by Maarten on 6-10-2015.
  * Finds matches based on the games users are watching on Twitch.
- *
+ * <p>
  * Use case:
  * "Find match by comparing the game genres watched."
  */

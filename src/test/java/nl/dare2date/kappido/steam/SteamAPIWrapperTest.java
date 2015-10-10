@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Maarten on 28-9-2015.
+ * Tests the Steam-api-wrapper
  */
 public class SteamAPIWrapperTest {
     private static final String MINEMAARTEN_STEAM_ID = "76561198034641265";

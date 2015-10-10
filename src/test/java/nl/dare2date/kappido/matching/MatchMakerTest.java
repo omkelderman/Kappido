@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Maarten on 05-Oct-15.
  * Class to unit test the {@link MatchMaker} class.
  */
 public class MatchMakerTest {
@@ -38,7 +37,7 @@ public class MatchMakerTest {
      */
     @Test
     public void checkSortOrder() {
-        List<MatchParameter> matchParameters = new ArrayList<MatchParameter>();
+        List<MatchParameter> matchParameters = new ArrayList<>();
 
         //Set to match only based on 'mutual followings'.
         MatchParameter parameter = new MatchParameter();
@@ -54,18 +53,18 @@ public class MatchMakerTest {
 
     /**
      * Validate the expected matching probabilities.
-     *
+     * <p>
      * Two instances of TestMatcher are used which will return a match with:
      * -user id 1 with a probability of 0.5
      * -user id 2 with a probability of 0.3
-     *
+     * <p>
      * When matching on two matching parameters one with weighing 1 and one with 2, we expect:
      * -user id 1 with a probability of 0.5 * 2 + 0.5 * 1 = 1.5
      * -user id 2 with a probability of 0.3 * 2 + 0.3 * 1 = 0.9
      */
     @Test
     public void checkCombinedProbabilities() {
-        List<MatchParameter> matchParameters = new ArrayList<MatchParameter>();
+        List<MatchParameter> matchParameters = new ArrayList<>();
 
         MatchParameter parameter = new MatchParameter();
         parameter.setMatchType(MatchType.MUTUAL_FOLLOWINGS);

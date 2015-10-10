@@ -1,7 +1,7 @@
 package nl.dare2date.kappido.matching;
 
 /**
- * Created by Olle on 06-10-2015.
+ * A lookup-list to use in Unit Tests with Dare2Date user-ids of specific twitch-ids or steam-ids
  */
 public class UserIDs {
     public static final int TWITCH_STAIAIN = 0;

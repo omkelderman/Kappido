@@ -11,7 +11,6 @@ import nl.dare2date.profile.ID2DProfileManager;
 import java.util.*;
 
 /**
- * Created by Maarten on 05-Oct-15.
  * The work horse class of the application. When invoked it will create a match based on the supplied match parameters.
  * It will calculate a list of Dare2Date users with their matching probabilities.
  */
@@ -37,9 +36,10 @@ public class MatchMaker {
     /**
      * When invoked it will analyze the Dare2Date user database on various configurable parameters. It will return
      * a list of users that are a match with the user provided, sorted from highest to lowest match probability.
-     * @param dare2DateUser The user that is used to match with.
+     *
+     * @param dare2DateUser   The user that is used to match with.
      * @param matchParameters A list of parameters to match on and their weighing. With the latter some parameters could
-     * be made more important than others.
+     *                        be made more important than others.
      * @return A list of matches (with other users), sorted from highest matching probability to the lowest.
      */
     public List<MatchEntry> findMatch(int dare2DateUser, List<MatchParameter> matchParameters) {
@@ -67,8 +67,9 @@ public class MatchMaker {
 
     /**
      * Simply converts the <Dare2DateUserId, MatchProbability> map to a list containing this info.
-     * @param map
-     * @return
+     *
+     * @param map The map to convert from
+     * @return The list that the map has been converted to
      */
     private List<MatchEntry> convertToMatchList(Map<Integer, Double> map) {
         List<MatchEntry> matches = new ArrayList<>();
